@@ -1,8 +1,9 @@
-package com.miniclip.footb.ui.services
+package com.miniclip.footb.ui.services.params.m_fb
 
 import android.content.Context
 import com.facebook.FacebookSdk
 import com.facebook.applinks.AppLinkData
+import com.miniclip.footb.ui.services.params.m_fb.repo.MyFbRepo
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlin.coroutines.resume
