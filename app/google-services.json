@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "583559385986",
+    "project_id": "lucky-star-622f0",
+    "storage_bucket": "lucky-star-622f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583559385986:android:b4b95086b3d59aa507b59b",
+        "android_client_info": {
+          "package_name": "com.miniclip.footb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "583559385986-rfvr0id114po8r1q8q8d7khin368qbl5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_hsmcsfXx9qcLL6S9niUU8DFYkZk-yJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "583559385986-rfvr0id114po8r1q8q8d7khin368qbl5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,6 @@
 package com.miniclip.footb.ui.model
 
-data class CheckData(
+data class ConfigData(
     val tracker: String?,
     val isAppsFlyerEnabled: Boolean,
     val fbAppId: String?,
