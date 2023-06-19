@@ -11,16 +11,13 @@ import kotlin.coroutines.suspendCoroutine
 
 @ObfustringThis
 class MyReferrerImpl @Inject constructor(
-    @ApplicationContext myAppContext: Context
+    @ApplicationContext private val myAppContext: Context
 ) : MyReferrerRepo {
     override var clientInstance: InstallReferrerClient? = null
 
-    init {
-        clientInstance = InstallReferrerClient.newBuilder(myAppContext).build()
-    }
-
     override suspend fun getServiceString(): String? = suspendCoroutine { mContinuation ->
         var mReferrer: String? = null
+        clientInstance = InstallReferrerClient.newBuilder(myAppContext).build()
 
         clientInstance?.startConnection(object : InstallReferrerStateListener {
             override fun onInstallReferrerSetupFinished(executionCode: Int) {

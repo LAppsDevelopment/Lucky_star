@@ -61,7 +61,7 @@ class MyAppsFlyerImpl @Inject constructor(
     }
 
     private fun convertMapResponse(data: MutableMap<String, Any>?): Map<String, String?>? =
-        data?.entries?.associate { it.key to it.value.toString() }
+        data?.entries?.associate { it.key to it.value?.toString() }
 
     companion object {
         const val APPS_FLYER_DEV_KEY = "CuMkMgVWpTFur6VxbZwqea"

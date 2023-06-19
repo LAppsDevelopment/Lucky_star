@@ -21,14 +21,14 @@ class PhoneExtensionImpl @Inject constructor(
 
     //developer check
     override fun isDeveloperSettingsEnable() = try {
-        val defaultDeveloper = 0
+        val defaultDevProperty = 0
 
         Settings.Global
             .getInt(
                 appContext.contentResolver,
                 developmentSettings,
-                defaultDeveloper
-            ) != defaultDeveloper
+                defaultDevProperty
+            ) != defaultDevProperty
     } catch (e: Exception) {
         true
     }

@@ -19,7 +19,7 @@ class AdvertisingParamImpl @Inject constructor(
     override suspend fun getAdvertisingID(): String? = withContext(Dispatchers.IO) {
         suspendCoroutine { continuation ->
             try {
-                continuation.resume(AdvertisingIdClient.getAdvertisingIdInfo(context).id)
+                continuation.resume(AdvertisingIdClient.getAdvertisingIdInfo(context).id.toString())
             } catch (e: Exception) {
                 continuation.resume(null)
             }
