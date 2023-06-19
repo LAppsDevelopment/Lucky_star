@@ -1,13 +1,15 @@
-package com.miniclip.footb.ui.services.params.m_referrer
+package com.miniclip.footb.ui.services.params.long_awaited.m_referrer
 
 import android.content.Context
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
 import dagger.hilt.android.qualifiers.ApplicationContext
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfustringThis
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+@ObfustringThis
 class MyReferrerImpl @Inject constructor(
     @ApplicationContext myAppContext: Context
 ) : MyReferrerRepo {

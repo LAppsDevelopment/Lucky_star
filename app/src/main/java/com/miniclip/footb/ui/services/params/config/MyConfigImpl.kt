@@ -11,8 +11,10 @@ import com.miniclip.footb.ui.model.ConfigParamsEnum
 import com.miniclip.footb.ui.services.params.config.repo.MyConfigBaseParamsRepo
 import com.miniclip.footb.ui.services.params.config.repo.MyConfigFlyerParamRepo
 import com.miniclip.footb.ui.services.params.config.repo.MyConfigInitRepo
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfustringThis
 import javax.inject.Inject
 
+@ObfustringThis
 class MyConfigImpl @Inject constructor() : MyConfigInitRepo, MyConfigBaseParamsRepo,
     MyConfigFlyerParamRepo {
     override val configInstance: FirebaseRemoteConfig = Firebase.remoteConfig.apply {

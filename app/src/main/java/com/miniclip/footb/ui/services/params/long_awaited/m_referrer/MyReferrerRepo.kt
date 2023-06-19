@@ -1,4 +1,4 @@
-package com.miniclip.footb.ui.services.params.m_referrer
+package com.miniclip.footb.ui.services.params.long_awaited.m_referrer
 
 import com.android.installreferrer.api.InstallReferrerClient
 

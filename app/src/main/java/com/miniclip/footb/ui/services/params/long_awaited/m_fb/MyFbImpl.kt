@@ -1,14 +1,16 @@
-package com.miniclip.footb.ui.services.params.m_fb
+package com.miniclip.footb.ui.services.params.long_awaited.m_fb
 
 import android.content.Context
 import com.facebook.FacebookSdk
 import com.facebook.applinks.AppLinkData
-import com.miniclip.footb.ui.services.params.m_fb.repo.MyFbRepo
+import com.miniclip.footb.ui.services.params.long_awaited.m_fb.repo.MyFbRepo
 import dagger.hilt.android.qualifiers.ApplicationContext
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfustringThis
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+@ObfustringThis
 class MyFbImpl @Inject constructor(
     @ApplicationContext val context: Context
 ) : MyFbRepo {

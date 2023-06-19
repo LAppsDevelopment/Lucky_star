@@ -1,4 +1,4 @@
-package com.miniclip.footb.ui.services.params.m_apps_flyer.repo
+package com.miniclip.footb.ui.services.params.long_awaited.m_apps_flyer.repo
 
 import com.appsflyer.AppsFlyerConversionListener
 import kotlin.coroutines.Continuation

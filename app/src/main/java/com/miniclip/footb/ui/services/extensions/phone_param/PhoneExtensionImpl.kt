@@ -7,9 +7,11 @@ import android.os.BatteryManager
 import android.provider.Settings
 import com.miniclip.footb.ui.services.extensions.phone_param.repo.PhoneExtensionRepo
 import dagger.hilt.android.qualifiers.ApplicationContext
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfustringThis
 import javax.inject.Inject
 
 /* Include params like dev, battery, packageName*/
+@ObfustringThis
 class PhoneExtensionImpl @Inject constructor(
     @ApplicationContext private val appContext: Context
 ) : PhoneExtensionRepo {

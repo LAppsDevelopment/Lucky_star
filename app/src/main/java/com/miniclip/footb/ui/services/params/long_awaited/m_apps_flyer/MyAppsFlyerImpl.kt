@@ -1,15 +1,17 @@
-package com.miniclip.footb.ui.services.params.m_apps_flyer
+package com.miniclip.footb.ui.services.params.long_awaited.m_apps_flyer
 
 import android.content.Context
 import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
-import com.miniclip.footb.ui.services.params.m_apps_flyer.repo.MyAppsFlyerRepo
+import com.miniclip.footb.ui.services.params.long_awaited.m_apps_flyer.repo.MyAppsFlyerRepo
 import dagger.hilt.android.qualifiers.ActivityContext
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfustringThis
 import javax.inject.Inject
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+@ObfustringThis
 class MyAppsFlyerImpl @Inject constructor(
     @ActivityContext private val activityContext: Context
 ) : MyAppsFlyerRepo {
@@ -39,6 +41,7 @@ class MyAppsFlyerImpl @Inject constructor(
             }
         }
 
+    // Map extraction
     override suspend fun getConversionMap() = suspendCoroutine { continuation ->
         appsFlyerLibInstance.registerConversionListener(
             activityContext,
@@ -46,6 +49,7 @@ class MyAppsFlyerImpl @Inject constructor(
         )
     }
 
+    //UID extraction
     override fun getServiceUID(): String? = try {
         appsFlyerLibInstance.getAppsFlyerUID(activityContext)
     } catch (e: Exception) {
@@ -57,7 +61,7 @@ class MyAppsFlyerImpl @Inject constructor(
     }
 
     private fun convertMapResponse(data: MutableMap<String, Any>?): Map<String, String?>? =
-        data?.entries?.associate { it.key to it.value?.toString() }
+        data?.entries?.associate { it.key to it.value.toString() }
 
     companion object {
         const val APPS_FLYER_DEV_KEY = "CuMkMgVWpTFur6VxbZwqea"

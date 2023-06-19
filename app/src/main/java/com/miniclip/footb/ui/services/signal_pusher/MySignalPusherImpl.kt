@@ -3,9 +3,11 @@ package com.miniclip.footb.ui.services.signal_pusher
 import android.content.Context
 import com.onesignal.OneSignal
 import dagger.hilt.android.qualifiers.ApplicationContext
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfustringThis
 import javax.inject.Inject
 
 /* One Signal */
+@ObfustringThis
 class MySignalPusherImpl @Inject constructor(
     @ApplicationContext private val appContext: Context
 ) : MySignalPusherRepo {
