@@ -1,1 +1,3 @@
-#TODO Don't forget about proguard.rules.pro
+-obfuscationdictionary data_for_encode.txt
+-classobfuscationdictionary data_for_encode.txt
+-packageobfuscationdictionary data_for_encode.txt
