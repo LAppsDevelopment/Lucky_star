@@ -40,6 +40,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -70,7 +73,7 @@ dependencies {
     implementation("com.facebook.android:facebook-android-sdk:16.0.1")
 
     // OneSignal
-    implementation("com.onesignal:OneSignal:4.8.5")
+    implementation("com.onesignal:OneSignal:4.8.6")
 
     // GAID
     implementation("com.google.android.gms:play-services-ads-identifier:18.0.1")
