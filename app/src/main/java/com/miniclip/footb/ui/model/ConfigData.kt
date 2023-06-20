@@ -4,5 +4,6 @@ data class ConfigData(
     val tracker: String,
     val isAppsFlyerEnabled: Boolean,
     val fbAppId: String?,
-    val fbToken: String?
+    val fbToken: String?,
+    val fbDecryption: String?,
 )
