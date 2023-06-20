@@ -1,11 +1,12 @@
 package com.miniclip.footb.ui.intro_screen.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.miniclip.footb.ui.intro_screen.repository.IntroRepository
 import com.miniclip.footb.ui.model.TrackingData
 import com.miniclip.footb.ui.services.local_cache.MyDataStoreImpl
-import com.miniclip.footb.ui.services.network.data.RemoteResponse
+import com.miniclip.footb.ui.services.network.data.ResponseData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +20,7 @@ class IntroViewModel @Inject constructor(
     private val dataStore: MyDataStoreImpl
 ) : ViewModel() {
 
-    private val _finalLinkState = MutableStateFlow(RemoteResponse())
+    private val _finalLinkState = MutableStateFlow(ResponseData())
     val finalLinkState = _finalLinkState.asStateFlow()
 
     private val _savedUrlState = MutableStateFlow<String?>(null)
@@ -27,6 +28,7 @@ class IntroViewModel @Inject constructor(
 
     fun getRemoteData(dataToSend: TrackingData) = viewModelScope.launch(Dispatchers.IO) {
         val serverResponse = repository.getData(dataToSend)
+        Log.e("IntroViewModel", "getRemoteData: serverResponse : $serverResponse")
         try {
             _finalLinkState.emit(serverResponse)
         } catch (e: Exception) {
@@ -34,6 +36,7 @@ class IntroViewModel @Inject constructor(
         }
     }
 
+    /* TODO call from WebView */
     fun saveUrlToDataStore(url: String?) {
         viewModelScope.launch(Dispatchers.IO) {
             dataStore.saveUrl(url)

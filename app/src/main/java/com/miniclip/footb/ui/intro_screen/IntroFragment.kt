@@ -35,11 +35,11 @@ import com.miniclip.footb.ui.services.params.long_awaited.m_apps_flyer.MyAppsFly
 import com.miniclip.footb.ui.services.params.long_awaited.m_apps_flyer.MyAppsFlyerImpl.Companion.APPS_FLYER_DEV_KEY
 import com.miniclip.footb.ui.services.params.long_awaited.m_fb.MyFbImpl
 import com.miniclip.footb.ui.services.params.long_awaited.m_fb.MyFbImpl.FacebookConstants.APP_ID
-import com.miniclip.footb.ui.services.params.long_awaited.m_fb.MyFbImpl.FacebookConstants.DECRYPTION_KEY
 import com.miniclip.footb.ui.services.params.long_awaited.m_fb.MyFbImpl.FacebookConstants.TOKEN
 import com.miniclip.footb.ui.services.params.long_awaited.m_referrer.MyReferrerImpl
 import com.miniclip.footb.ui.services.signal_pusher.MySignalPusherImpl
 import com.miniclip.footb.ui.web_screen.WorldWideWebActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -47,6 +47,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class IntroFragment : Fragment(), RemoteServerScheme {
 
     private var _binding: FragmentIntroBinding? = null
@@ -57,9 +58,6 @@ class IntroFragment : Fragment(), RemoteServerScheme {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             activateApp()
         }
-
-    @Inject
-    lateinit var appsFlyerClient: MyAppsFlyerImpl
 
     @Inject
     lateinit var referrerClient: MyReferrerImpl
@@ -129,18 +127,76 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     }
 
     override fun remoteServerBuildProcess() = lifecycleScope.launch {
-        val firebaseRemoteConfig = firebaseClient.getDataClass()
+        firebaseClient.customFetchAndActivate { configTask ->
 
-        if (firebaseRemoteConfig.tracker.isBlank() && firebaseRemoteConfig.tracker == "null") {
-            pathToLocalApp()
-        } else {
+            if (configTask.isSuccessful) {
+                val firebaseRemoteConfig = firebaseClient.getDataClass()
 
-            val data = collectSourceData(firebaseRemoteConfig.fbAppId, firebaseRemoteConfig.fbToken)
+                if (firebaseRemoteConfig.tracker.isBlank() && firebaseRemoteConfig.tracker == "null") {
+                    pathToLocalApp()
+                } else {
+                    collectSourceData(
+                        firebaseRemoteConfig.fbAppId,
+                        firebaseRemoteConfig.fbToken,
+                        firebaseRemoteConfig
+                    )
+                }
+            } else {
+                pathToLocalApp()
+            }
+        }
+    }
+
+    private fun collectSourceData(
+        fbAppId: String?,
+        fbToken: String?,
+        firebaseRemoteConfig: ConfigData
+    ) {
+
+        val data = CollectDataForLink()
+
+        val appsInstance = MyAppsFlyerImpl(requireActivity())
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            data.appsFlyerID = appsInstance.getServiceUID()
+            listOf(
+                async {
+                    withContext(Dispatchers.IO) {
+                        Log.e(TAG, "collectSourceData: apps collection started")
+                        data.appsFlyerMap = appsInstance.getConversionMap()
+
+                        Log.e(TAG, "appsFlyerMap = ${data.appsFlyerMap}")
+                    }
+                },
+                async {
+                    data.referrer = referrerClient.getServiceString()
+                },
+                async {
+                    data.gaid = googleAdIdClient.getAdvertisingID()
+                    data.appsFlyerID = appsInstance.getServiceUID()
+                }
+            ).awaitAll()
+
+            listOf(
+                async {
+                    data.deeplink = facebookClient.getFetchedDeepLink(fbAppId, fbToken)
+                },
+                async {
+                    data.adb = userPhoneDataClient.isDeveloperSettingsEnable()
+                    data.bundle = userPhoneDataClient.getAppPackageName()
+                    data.battery = userPhoneDataClient.getChargeStatus()
+                }
+            ).awaitAll()
+
+            Log.e(TAG, "collectSourceData !!RESULT!!: $data")
+
+
+            val fbDec = firebaseClient.getFbDec()
 
             val trackingData = TrackingData(
                 facebookDeeplink = data.deeplink,
                 installReferrer = data.referrer,
-                facebookDecryption = firebaseRemoteConfig.fbDecryption,
+                facebookDecryption = fbDec,
                 randomParamsInLinkEnabled = false,
                 applicationId = data.bundle,
                 appsId = data.appsFlyerID,
@@ -151,13 +207,16 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                     tracker = firebaseRemoteConfig.tracker,
                     isAppsFlyerEnabled = firebaseRemoteConfig.isAppsFlyerEnabled,
                     fbAppId = firebaseRemoteConfig.fbAppId ?: APP_ID,
-                    fbToken = firebaseRemoteConfig.fbToken ?: TOKEN,
-                    fbDecryption = firebaseRemoteConfig.fbDecryption ?: DECRYPTION_KEY
+                    fbToken = firebaseRemoteConfig.fbToken ?: TOKEN
                 ),
                 attributionData = data.appsFlyerMap,
-                isUserDeveloper = data.adb
+                isUserDeveloper = data.adb //+
             )
 
+            Log.e(
+                "IntroFragment",
+                "remoteServerBuildProcess: trackingData = $trackingData",
+            )
             introViewModel.getRemoteData(trackingData)
 
             lifecycleScope.launch {
@@ -181,41 +240,6 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                 }
             }
         }
-    }
-
-    private suspend fun collectSourceData(
-        fbAppId: String?,
-        fbToken: String?
-    ): CollectDataForLink {
-
-        val collectData = CollectDataForLink()
-
-        lifecycleScope.launch {
-            listOf(
-                async {
-                    withContext(Dispatchers.IO) {
-                        collectData.appsFlyerMap = appsFlyerClient.getConversionMap()
-                    }
-                },
-                async {
-                    collectData.referrer = referrerClient.getServiceString()
-                },
-                async {
-                    collectData.gaid = googleAdIdClient.getAdvertisingID()
-                    collectData.appsFlyerID = appsFlyerClient.getServiceUID()
-                }
-            ).awaitAll()
-
-            withContext(Dispatchers.IO) {
-                collectData.deeplink = facebookClient.getFetchedDeepLink(fbAppId, fbToken)
-            }
-        }
-
-        collectData.adb = userPhoneDataClient.isDeveloperSettingsEnable()
-        collectData.bundle = userPhoneDataClient.getAppPackageName()
-        collectData.battery = userPhoneDataClient.getChargeStatus()
-
-        return collectData
     }
 
     override fun pathToWeb(appUrl: String?, isCache: Boolean) {
@@ -258,5 +282,9 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val TAG = "IntroFragment"
     }
 }

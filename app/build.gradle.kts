@@ -5,8 +5,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
-    //     TODO Google services
-//    id("com.google.gms.google-services")
+    id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.onesignal.androidsdk.onesignal-gradle-plugin")
     id("io.github.c0nnor263.obfustring-plugin")
@@ -16,6 +15,10 @@ val localProperties = Properties()
 val localPropertiesFile: File = rootProject.file("local.properties")
 if (localPropertiesFile.exists()) {
     localProperties.load(localPropertiesFile.inputStream())
+}
+
+obfustring {
+    packageKey.set(android.namespace)
 }
 
 android {
@@ -31,7 +34,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "SERVER_HOST", "\"${localProperties.getProperty("HOST")}\"")
+        buildConfigField("String", "HOST", "\"${localProperties.getProperty("SERVER_HOST")}\"")
     }
 
     packagingOptions {

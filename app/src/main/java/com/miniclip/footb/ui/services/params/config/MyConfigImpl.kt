@@ -15,7 +15,7 @@ import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.Ob
 import javax.inject.Inject
 
 @ObfustringThis
-class MyConfigImpl @Inject constructor() : MyConfigInitRepo, MyConfigBaseParamsRepo,
+class MyConfigImpl@Inject constructor() : MyConfigInitRepo, MyConfigBaseParamsRepo,
     MyConfigFlyerParamRepo {
     override val configInstance: FirebaseRemoteConfig = Firebase.remoteConfig.apply {
         setConfigSettingsAsync(remoteConfigSettings {
@@ -30,8 +30,7 @@ class MyConfigImpl @Inject constructor() : MyConfigInitRepo, MyConfigBaseParamsR
         tracker = getStartString(),
         isAppsFlyerEnabled = isAppsFlyerEnabled(),
         fbAppId = getFbId(),
-        fbToken = getFbClientToken(),
-        fbDecryption = getFbDec()
+        fbToken = getFbClientToken()
     )
 
     //fetch and activate data with completion listener

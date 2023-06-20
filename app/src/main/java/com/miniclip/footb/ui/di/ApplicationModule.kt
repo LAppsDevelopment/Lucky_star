@@ -2,6 +2,7 @@ package com.miniclip.footb.ui.di
 
 import android.content.Context
 import com.miniclip.footb.ui.services.local_cache.MyDataStoreImpl
+import com.miniclip.footb.ui.services.params.config.MyConfigImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,4 +20,7 @@ object ApplicationModule {
         @ApplicationContext context: Context
     ) = MyDataStoreImpl(context)
 
+    @Singleton
+    @Provides
+    fun provideMyConfigImpl() = MyConfigImpl()
 }

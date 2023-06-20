@@ -28,7 +28,7 @@ class IntroActivity : AppCompatActivity(), ActivityCancellable {
         val hasCategory = intent?.hasCategory(Intent.CATEGORY_LAUNCHER)
         val isActionMain = intent?.action?.equals(Intent.ACTION_MAIN)
 
-        return isTaskRoot && hasCategory == true && isActionMain == true
+        return !isTaskRoot && hasCategory == true && isActionMain == true
     }
 
     override fun onDestroy() {

@@ -13,14 +13,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-    private const val serverHost = BuildConfig.SERVER_HOST
+    private const val serverHost = BuildConfig.HOST
     private const val port = "8080"
-    private const val API_BASE_URL = "http://$serverHost/$port"
+    private const val API_BASE_URL = "http://$serverHost:$port/"
 
     @Singleton
     @Provides

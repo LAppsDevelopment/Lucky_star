@@ -1,6 +1,7 @@
 package com.miniclip.footb.ui.services.params.long_awaited.m_apps_flyer
 
 import android.content.Context
+import android.util.Log
 import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
 import com.miniclip.footb.ui.services.params.long_awaited.m_apps_flyer.repo.MyAppsFlyerRepo
@@ -24,6 +25,7 @@ class MyAppsFlyerImpl @Inject constructor(
         { continuation ->
             object : AppsFlyerConversionListener {
                 override fun onConversionDataSuccess(data: MutableMap<String, Any>?) {
+                    Log.e("MyAppsFlyerImpl", "onConversionDataSuccess: $data")
                     continuation.customResume(convertMapResponse(data))
                 }
 

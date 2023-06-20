@@ -7,9 +7,13 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.miniclip.footb.ui.services.local_cache.repo.DataStoreRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
-class MyDataStoreImpl(val context: Context) : DataStoreRepository {
+class MyDataStoreImpl @Inject constructor(
+    @ApplicationContext val context: Context
+) : DataStoreRepository {
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(DATA_STORE_NAME)
 
