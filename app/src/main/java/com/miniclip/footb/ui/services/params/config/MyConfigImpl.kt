@@ -30,7 +30,8 @@ class MyConfigImpl @Inject constructor() : MyConfigInitRepo, MyConfigBaseParamsR
         tracker = getStartString(),
         isAppsFlyerEnabled = isAppsFlyerEnabled(),
         fbAppId = getFbId(),
-        fbToken = getFbClientToken()
+        fbToken = getFbClientToken(),
+        fbDecryption = getFbDec()
     )
 
     //fetch and activate data with completion listener

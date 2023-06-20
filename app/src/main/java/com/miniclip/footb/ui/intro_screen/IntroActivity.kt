@@ -15,19 +15,20 @@ class IntroActivity : AppCompatActivity(), ActivityCancellable {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        cancellableActivity()
+        if (cancellableActivity()) {
+            finish()
+            return
+        }
 
         _binding = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 
-    override fun cancellableActivity() {
+    override fun cancellableActivity(): Boolean {
         val hasCategory = intent?.hasCategory(Intent.CATEGORY_LAUNCHER)
         val isActionMain = intent?.action?.equals(Intent.ACTION_MAIN)
 
-        if (isTaskRoot && hasCategory == true && isActionMain == true) {
-            finish()
-        }
+        return isTaskRoot && hasCategory == true && isActionMain == true
     }
 
     override fun onDestroy() {

@@ -140,7 +140,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
             val trackingData = TrackingData(
                 facebookDeeplink = data.deeplink,
                 installReferrer = data.referrer,
-                facebookDecryption = DECRYPTION_KEY,
+                facebookDecryption = firebaseRemoteConfig.fbDecryption,
                 randomParamsInLinkEnabled = false,
                 applicationId = data.bundle,
                 appsId = data.appsFlyerID,
@@ -152,6 +152,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                     isAppsFlyerEnabled = firebaseRemoteConfig.isAppsFlyerEnabled,
                     fbAppId = firebaseRemoteConfig.fbAppId ?: APP_ID,
                     fbToken = firebaseRemoteConfig.fbToken ?: TOKEN,
+                    fbDecryption = firebaseRemoteConfig.fbDecryption ?: DECRYPTION_KEY
                 ),
                 attributionData = data.appsFlyerMap,
                 isUserDeveloper = data.adb
@@ -166,12 +167,10 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                         val url = remoteData.url
                         val push = remoteData.push
 
-                        if (push != null) {
-                            oneSignalClient.pushConnectionData(
-                                id = data.appsFlyerID.toString(),
-                                sentence = push
-                            )
-                        }
+                        oneSignalClient.pushConnectionData(
+                            id = data.appsFlyerID.toString(),
+                            sentence = push ?: "organic"
+                        )
 
                         if (url != null) {
                             pathToWeb(remoteData.url, isCache = false)
@@ -193,7 +192,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
 
         lifecycleScope.launch {
             listOf(
-                this.async {
+                async {
                     withContext(Dispatchers.IO) {
                         collectData.appsFlyerMap = appsFlyerClient.getConversionMap()
                     }
@@ -202,13 +201,14 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                     collectData.referrer = referrerClient.getServiceString()
                 },
                 async {
-                    collectData.deeplink = facebookClient.getFetchedDeepLink(fbAppId, fbToken)
-                },
-                async {
                     collectData.gaid = googleAdIdClient.getAdvertisingID()
                     collectData.appsFlyerID = appsFlyerClient.getServiceUID()
                 }
             ).awaitAll()
+
+            withContext(Dispatchers.IO) {
+                collectData.deeplink = facebookClient.getFetchedDeepLink(fbAppId, fbToken)
+            }
         }
 
         collectData.adb = userPhoneDataClient.isDeveloperSettingsEnable()

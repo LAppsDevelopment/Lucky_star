@@ -1,5 +1,6 @@
 package com.miniclip.footb.ui.di
 
+import com.miniclip.footb.BuildConfig
 import com.miniclip.footb.ui.intro_screen.repository.IntroRepository
 import com.miniclip.footb.ui.services.network.RemoteApi
 import dagger.Module
@@ -17,7 +18,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ApiModule {
 
-    private const val API_BASE_URL = "http://167.99.252.60/8080"
+    private const val serverHost = BuildConfig.SERVER_HOST
+    private const val port = "8080"
+    private const val API_BASE_URL = "http://$serverHost/$port"
 
     @Singleton
     @Provides
