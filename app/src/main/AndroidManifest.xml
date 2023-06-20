@@ -21,7 +21,7 @@
     </queries>
 
     <application
-        android:name=".ui.di.MyApplication"
+        android:name="com.miniclip.footb.di.MyApplication"
         android:allowBackup="true"
         android:appCategory="productivity"
         android:icon="@mipmap/ic_launcher"
@@ -37,7 +37,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.intro_screen.IntroActivity"
+            android:name=".ui.host.IntroActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
