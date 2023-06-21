@@ -3,10 +3,14 @@ package com.miniclip.footb.ui.web_screen
 import android.os.Bundle
 import android.webkit.CookieManager
 import android.webkit.WebView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.miniclip.footb.databinding.ActivityWorldWideWebBinding
 import com.miniclip.footb.services.analytic.NotificationMessageManager.URL_KEY
+import com.miniclip.footb.services.image_service.WorldWideWebImageServiceImpl
 import com.miniclip.footb.services.wide_preferences.WideWebPreferences
+import com.miniclip.footb.viewmodels.WorldWideWebViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -17,6 +21,22 @@ class WorldWideWebActivity : AppCompatActivity() {
 
     @Inject
     lateinit var wideWebPreferences: WideWebPreferences
+
+    @Inject
+    lateinit var wideWebImageServiceImpl: WorldWideWebImageServiceImpl
+
+    private val wwwViewModel: WorldWideWebViewModel by viewModels()
+
+    private val requestPermissionOnImage =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            it?.let {
+                wideWebImageServiceImpl.startCamera(it)
+            }
+        }
+    private val imagePermissionResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            wideWebImageServiceImpl.createImageResult(it)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +49,14 @@ class WorldWideWebActivity : AppCompatActivity() {
         setupWebView(binding.mWebView)
 
         binding.mWebView.loadUrl(getIntentWebUrl())
+
+        wwwViewModel.setMyChrome {
+            wideWebImageServiceImpl.permissionsResultCallback(
+                it,
+                requestPermissionOnImage,
+                imagePermissionResult
+            )
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -63,7 +91,13 @@ class WorldWideWebActivity : AppCompatActivity() {
     }
 
     private fun getIntentWebUrl(): String {
-        return intent.getStringExtra(URL_KEY) ?: ""
+        val luckyLink = intent.getStringExtra(URL_KEY) ?: ""
+
+        if (luckyLink.isNotBlank()) {
+            wwwViewModel.saveUrlToDataStore(luckyLink)
+        }
+
+        return luckyLink
     }
 
     private fun launchCookieManager(enable: Boolean) {
