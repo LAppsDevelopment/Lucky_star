@@ -48,5 +48,6 @@ class MyFbImpl @Inject constructor(
     companion object FacebookConstants {
         const val APP_ID = "966958804612479"
         const val TOKEN = "h9o7yv_bD5lAL8YY_FfACnTwWHA"
+        const val DECRYPTION_KEY = "233f138260d0350d8278312e51bf95517fb805d9648c9968f834bae882cbdfdb"
     }
 }
