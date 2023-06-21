@@ -2,5 +2,7 @@
     <string name="app_name">Lucky star</string>
 
     <string name="title_activity_world_wide_web">WorldWideWebActivity</string>
+    <string name="content_description">Description for main hero loader image</string>
+    <string name="loading_txt">Loading</string>
 
 </resources>
