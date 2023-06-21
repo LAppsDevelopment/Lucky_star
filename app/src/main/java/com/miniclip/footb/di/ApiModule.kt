@@ -46,9 +46,5 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit): RemoteApi = retrofit.create(RemoteApi::class.java)
-
-    @Singleton
-    @Provides
     fun provideRepository(apiService: RemoteApi) = IntroRepository(apiService)
 }
