@@ -1,7 +1,9 @@
 package com.miniclip.footb.services.wide_preferences
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Build
+import android.webkit.ValueCallback
 import android.webkit.WebSettings
 import android.webkit.WebView
 import com.miniclip.footb.back_callback.PageBackCallbackHandler
@@ -11,19 +13,25 @@ import javax.inject.Inject
 
 class WideWebPreferences @Inject constructor(
     private val pageBackCallbackHandler: PageBackCallbackHandler,
-    private val customInternetChromeClient: CustomInternetChromeClient,
-    private val customInternetViewClient: CustomInternetViewClient
+    private val customInternetViewClient: CustomInternetViewClient,
+    private val chromeInternetClient: CustomInternetChromeClient
 ) : WideWebPreferencesInterface {
 
     override fun addBackCallback(webUrl: String, mView: WebView) {
         pageBackCallbackHandler.setCustomCallback(webUrl, mView)
     }
 
-    override fun setupClients(mView: WebView) {
+    override fun setupWebViewClient(mView: WebView) {
         mView.apply {
             webViewClient = customInternetViewClient
-            webChromeClient = customInternetChromeClient
         }
+    }
+
+    override fun setupWebChromeClient(
+        mView: WebView,
+        myChromeCallback: (ValueCallback<Array<Uri>>?) -> Unit
+    ) {
+        chromeInternetClient.provideWebChromeClient(mView, myChromeCallback)
     }
 
     override fun setupSettings(mViewSettings: WebSettings) {
