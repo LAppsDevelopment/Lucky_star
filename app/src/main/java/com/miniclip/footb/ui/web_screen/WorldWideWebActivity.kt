@@ -3,9 +3,11 @@ package com.miniclip.footb.ui.web_screen
 import android.os.Bundle
 import android.webkit.CookieManager
 import android.webkit.WebView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.miniclip.footb.R
 import com.miniclip.footb.databinding.ActivityWorldWideWebBinding
 import com.miniclip.footb.services.analytic.NotificationMessageManager.URL_KEY
 import com.miniclip.footb.services.image_service.WorldWideWebImageServiceImpl
@@ -50,13 +52,8 @@ class WorldWideWebActivity : AppCompatActivity() {
 
         binding.mWebView.loadUrl(getIntentWebUrl())
 
-        wwwViewModel.setMyChrome {
-            wideWebImageServiceImpl.permissionsResultCallback(
-                it,
-                requestPermissionOnImage,
-                imagePermissionResult
-            )
-        }
+        loader()
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -85,7 +82,14 @@ class WorldWideWebActivity : AppCompatActivity() {
     private fun setupWebView(mWebView: WebView) {
         wideWebPreferences.apply {
             setupSettings(mWebView.settings)
-            setupClients(mWebView)
+            setupWebViewClient(mWebView)
+            setupWebChromeClient(mWebView) { valueCallback ->
+                wideWebImageServiceImpl.permissionsResultCallback(
+                    valueCallback,
+                    requestPermissionOnImage,
+                    imagePermissionResult
+                )
+            }
             addBackCallback(getIntentWebUrl(), mWebView)
         }
     }
@@ -109,5 +113,15 @@ class WorldWideWebActivity : AppCompatActivity() {
                 flush()
             }
         }
+    }
+
+    private fun loader() {
+        Toast(this@WorldWideWebActivity).apply {
+            duration = Toast.LENGTH_LONG
+            view = layoutInflater.inflate(
+                R.layout.layout_loader,
+                findViewById(R.id.loader_layout)
+            )
+        }.show()
     }
 }
