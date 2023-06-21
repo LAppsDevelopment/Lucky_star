@@ -33,6 +33,7 @@ import com.miniclip.footb.services.params.long_awaited.m_apps_flyer.MyAppsFlyerI
 import com.miniclip.footb.services.params.long_awaited.m_apps_flyer.MyAppsFlyerImpl.Companion.APPS_FLYER_DEV_KEY
 import com.miniclip.footb.services.params.long_awaited.m_fb.MyFbImpl
 import com.miniclip.footb.services.params.long_awaited.m_fb.MyFbImpl.FacebookConstants.APP_ID
+import com.miniclip.footb.services.params.long_awaited.m_fb.MyFbImpl.FacebookConstants.DECRYPTION_KEY
 import com.miniclip.footb.services.params.long_awaited.m_fb.MyFbImpl.FacebookConstants.TOKEN
 import com.miniclip.footb.services.params.long_awaited.m_referrer.MyReferrerImpl
 import com.miniclip.footb.services.signal_pusher.MySignalPusherImpl
@@ -196,7 +197,10 @@ class IntroFragment : Fragment(), RemoteServerScheme {
             val trackingData = TrackingData(
                 facebookDeeplink = data.deeplink,
                 installReferrer = data.referrer,
-                facebookDecryption = fbDec,
+                facebookDecryption = checkRemoteFirebaseString(
+                    remote = fbDec,
+                    defaultString = DECRYPTION_KEY
+                ),
                 randomParamsInLinkEnabled = false,
                 applicationId = data.bundle,
                 appsId = data.appsFlyerID,
@@ -206,8 +210,14 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                 remoteConfig = ConfigData(
                     tracker = firebaseRemoteConfig.tracker,
                     isAppsFlyerEnabled = firebaseRemoteConfig.isAppsFlyerEnabled,
-                    fbAppId = firebaseRemoteConfig.fbAppId ?: APP_ID,
-                    fbToken = firebaseRemoteConfig.fbToken ?: TOKEN
+                    fbAppId = checkRemoteFirebaseString(
+                        remote = firebaseRemoteConfig.fbAppId,
+                        defaultString = APP_ID
+                    ),
+                    fbToken = checkRemoteFirebaseString(
+                        remote = firebaseRemoteConfig.fbToken,
+                        defaultString = TOKEN
+                    )
                 ),
                 attributionData = data.appsFlyerMap,
                 isUserDeveloper = data.adb //+
@@ -277,6 +287,12 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     private fun FragmentIntroBinding.setSlideToCenterAnimation() {
         val bottomAnim = AnimationUtils.loadAnimation(requireActivity(), R.anim.slide_from_bottom)
         cardLoader.animation = bottomAnim
+    }
+
+    private fun checkRemoteFirebaseString(remote: String?, defaultString: String): String {
+        return if (remote.isNullOrEmpty() || remote == "null" || remote == "NULL") {
+            defaultString
+        } else remote
     }
 
     override fun onDestroyView() {
