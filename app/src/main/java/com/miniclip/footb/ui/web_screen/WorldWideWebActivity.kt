@@ -1,6 +1,7 @@
 package com.miniclip.footb.ui.web_screen
 
 import android.os.Bundle
+import android.webkit.CookieManager
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
 import com.miniclip.footb.databinding.ActivityWorldWideWebBinding
@@ -16,15 +17,41 @@ class WorldWideWebActivity : AppCompatActivity() {
 
     @Inject
     lateinit var wideWebPreferences: WideWebPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         _binding = ActivityWorldWideWebBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        launchCookieManager(true)
+
         setupWebView(binding.mWebView)
 
         binding.mWebView.loadUrl(getIntentWebUrl())
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        binding.mWebView.saveState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        binding.mWebView.restoreState(savedInstanceState)
+    }
+
+    override fun onPause() {
+        launchCookieManager(false)
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        _binding = null
     }
 
     private fun setupWebView(mWebView: WebView) {
@@ -37,5 +64,16 @@ class WorldWideWebActivity : AppCompatActivity() {
 
     private fun getIntentWebUrl(): String {
         return intent.getStringExtra(URL_KEY) ?: ""
+    }
+
+    private fun launchCookieManager(enable: Boolean) {
+        CookieManager.getInstance().apply {
+            if (enable) {
+                setAcceptCookie(true)
+                setAcceptThirdPartyCookies(binding.mWebView, true)
+            } else {
+                flush()
+            }
+        }
     }
 }
