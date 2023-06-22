@@ -1,7 +1,7 @@
 package com.miniclip.footb.services.open_ai
 
-import com.miniclip.footb.model.CompletionRequest
-import com.miniclip.footb.model.CompletionResponse
+import com.miniclip.footb.model.open_ai_api.CompletionRequest
+import com.miniclip.footb.model.open_ai_api.CompletionResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 

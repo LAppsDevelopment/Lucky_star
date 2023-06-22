@@ -1,4 +1,4 @@
-package com.miniclip.footb.model
+package com.miniclip.footb.model.open_ai_api
 
 import com.google.gson.annotations.SerializedName
 

@@ -129,8 +129,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     }
 
     override fun remoteServerBuildProcess() = lifecycleScope.launch {
-        pathToLocalApp() // TODO REMOVE
-        /*firebaseClient.customFetchAndActivate { configTask ->
+        firebaseClient.customFetchAndActivate { configTask ->
 
             if (configTask.isSuccessful) {
                 val firebaseRemoteConfig = firebaseClient.getDataClass()
@@ -147,7 +146,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
             } else {
                 pathToLocalApp()
             }
-        }*/
+        }
     }
 
     private fun collectSourceData(
