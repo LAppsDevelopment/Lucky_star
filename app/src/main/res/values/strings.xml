@@ -4,5 +4,6 @@
     <string name="title_activity_world_wide_web">WorldWideWebActivity</string>
     <string name="content_description">Description for main hero loader image</string>
     <string name="loading_txt">Loading</string>
+    <string name="use_chat_btn_txt">Use chat</string>
 
 </resources>
