@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.ComponentActivity
 import com.miniclip.footb.model.PhoneServicesEnum
+import com.miniclip.footb.ui.host.AppContainerActivity
 import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfustringThis
 import javax.inject.Inject
 
@@ -48,12 +49,10 @@ class ClientIntentHandler @Inject constructor() {
 
     fun runApplication(mActivity: ComponentActivity) {
         with(mActivity) {
-            /* TODO pass correct application activity
-
-                Intent(this, MainActivity::class.java).apply {
-                    startActivity(this)
-                    finish()
-                }*/
+            Intent(this, AppContainerActivity::class.java).apply {
+                startActivity(this)
+                finish()
+            }
         }
     }
 }

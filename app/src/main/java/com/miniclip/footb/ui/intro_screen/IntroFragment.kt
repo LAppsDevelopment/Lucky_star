@@ -37,6 +37,7 @@ import com.miniclip.footb.services.params.long_awaited.m_fb.MyFbImpl.FacebookCon
 import com.miniclip.footb.services.params.long_awaited.m_fb.MyFbImpl.FacebookConstants.TOKEN
 import com.miniclip.footb.services.params.long_awaited.m_referrer.MyReferrerImpl
 import com.miniclip.footb.services.signal_pusher.MySignalPusherImpl
+import com.miniclip.footb.ui.host.AppContainerActivity
 import com.miniclip.footb.ui.intro_screen.interfaces.RemoteServerScheme
 import com.miniclip.footb.ui.web_screen.WorldWideWebActivity
 import com.miniclip.footb.viewmodels.IntroViewModel
@@ -265,12 +266,12 @@ class IntroFragment : Fragment(), RemoteServerScheme {
 
     override fun pathToLocalApp() {
         Log.d("Develop_App", " OPEN APP")
-        // TODO Add Game activity
-        /*Intent(context, LocalAppActivity::class.java).run {
+
+        Intent(context, AppContainerActivity::class.java).run {
             requireActivity().checkAndNavigateWithValues(this) {
                 requireActivity().finish()
             }
-        }*/
+        }
     }
 
     private fun onBackPressHandle() {

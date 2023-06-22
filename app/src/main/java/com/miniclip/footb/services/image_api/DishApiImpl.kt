@@ -6,7 +6,6 @@ import java.io.IOException
 import javax.inject.Inject
 
 class DishApiImpl @Inject constructor() {
-    /* TODO call to get photo*/
     suspend fun requestDishPhoto(
         userQuery: String
     ): DishApiResponse? {

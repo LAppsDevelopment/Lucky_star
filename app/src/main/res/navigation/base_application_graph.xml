@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nav_graph2">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph2"
+    app:startDestination="@id/menuFragment">
 
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.miniclip.footb.ui.menu.MenuFragment"
+        android:label="MenuFragment" />
 </navigation>
