@@ -36,13 +36,6 @@ class IntroViewModel @Inject constructor(
         }
     }
 
-    /* TODO call from WebView */
-    fun saveUrlToDataStore(url: String?) {
-        viewModelScope.launch(Dispatchers.IO) {
-            dataStore.saveUrl(url)
-        }
-    }
-
     fun getUrlFromDataStore() {
         viewModelScope.launch(Dispatchers.IO) {
             val url = dataStore.getUrl()

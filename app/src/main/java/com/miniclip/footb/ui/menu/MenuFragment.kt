@@ -21,6 +21,11 @@ class MenuFragment : Fragment() {
     ): View {
 
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
+
+        binding.btnStartChat.setOnClickListener {
+            findNavController().navigate(R.id.menu_to_chat)
+        }
+
         return binding.root
     }
 

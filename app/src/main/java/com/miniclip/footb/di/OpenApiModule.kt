@@ -2,6 +2,7 @@ package com.miniclip.footb.di
 
 import com.miniclip.footb.model.AuthInterceptor
 import com.miniclip.footb.services.open_ai.ChatGPTApi
+import com.miniclip.footb.ui.chat_bot.repository.ChatRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,6 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -18,7 +20,6 @@ object OpenApiModule {
     private const val API_OPEN_AI_URL = "https://api.openai.com/"
     private const val OPEN_AI_KEY = "yV8BE0TrLd4UwlSoeufMT3BlbkFJ5fSXtflvcSjlQ5RYzfut"
 
-    /* TODO probably check " "*/
     @Singleton
     @Provides
     fun provideAuthInterceptor(): AuthInterceptor = AuthInterceptor("Bearer", OPEN_AI_KEY)
@@ -37,7 +38,8 @@ object OpenApiModule {
 
     @Singleton
     @Provides
-    fun provideOpenAiApiService(retrofit: Retrofit): ChatGPTApi = retrofit.create(ChatGPTApi::class.java)
+    fun provideOpenAiApiService(retrofit: Retrofit): ChatGPTApi =
+        retrofit.create(ChatGPTApi::class.java)
 
     @Singleton
     @Provides
@@ -46,4 +48,8 @@ object OpenApiModule {
         .baseUrl(API_OPEN_AI_URL)
         .client(okHttpClient)
         .build()
+
+    @Singleton
+    @Provides
+    fun provideChatRepository(chatGPTService: ChatGPTApi) = ChatRepository(chatGPTService)
 }
