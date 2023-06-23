@@ -18,7 +18,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object OpenApiModule {
     private const val API_OPEN_AI_URL = "https://api.openai.com/"
-    private const val OPEN_AI_KEY = "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"
+    // TODO ADD TO FIREBASE REMOTE CONFIG
+    private const val OPEN_AI_KEY = "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"
 
     @Singleton
     @Provides

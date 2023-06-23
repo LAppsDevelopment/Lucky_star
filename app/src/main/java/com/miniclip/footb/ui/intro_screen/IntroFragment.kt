@@ -286,7 +286,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     }
 
     private fun FragmentIntroBinding.setSlideToCenterAnimation() {
-        val bottomAnim = AnimationUtils.loadAnimation(requireActivity(), R.anim.slide_from_bottom)
+        val bottomAnim = AnimationUtils.loadAnimation(requireActivity(), R.anim.slide_from_bottom_25)
         cardLoader.animation = bottomAnim
     }
 

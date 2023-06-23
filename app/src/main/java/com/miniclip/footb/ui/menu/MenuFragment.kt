@@ -1,5 +1,6 @@
 package com.miniclip.footb.ui.menu
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,7 @@ class MenuFragment : Fragment() {
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
 
         statusBarIconsColorChange(requireActivity().window, lightIcons = true)
+        requireActivity().window.statusBarColor = Color.BLACK
 
         binding.btnStartChat.setOnClickListener {
             findNavController().navigate(R.id.menu_to_chat)

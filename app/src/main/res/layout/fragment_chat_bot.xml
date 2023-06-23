@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/color_chat_background"
     android:padding="16dp">
 
@@ -12,7 +12,9 @@
         style="@style/TextAppearance.ChatGPTApp.TitleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/chat_bot_by_openai_title_txt"
         android:textColor="@color/chat_title_text_color"
         android:textStyle="bold"
@@ -33,11 +35,11 @@
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        tools:listitem="@layout/chat_item"
         app:layout_constraintBottom_toTopOf="@+id/bottom_widget"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView"
+        tools:listitem="@layout/chat_item" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/bottom_widget"
@@ -52,15 +54,15 @@
             android:id="@+id/ask_question_edit_text"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="6"
             android:layout_marginEnd="8dp"
+            android:layout_weight="6"
             android:background="@drawable/outlined_rounded_corner"
             android:hint="@string/ask_question_txt"
-            android:textColorHint="@color/edit_text_tint_color"
             android:importantForAutofill="no"
             android:inputType="text"
             android:padding="16dp"
             android:textColor="@color/chat_title_text_color"
+            android:textColorHint="@color/edit_text_tint_color"
             android:textIsSelectable="true" />
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -74,5 +76,20 @@
             android:src="@drawable/ic_send_to_chat_bot" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/more_info"
+        style="@style/Chat.Button.Material.Custom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        android:drawableEnd="@drawable/ic_chat_ai_info"
+        android:text="@string/get_more_information_txt"
+        android:textSize="24sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/chat_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

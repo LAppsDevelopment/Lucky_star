@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.miniclip.footb.databinding.ChatItemBinding
 import com.miniclip.footb.model.chat.ChatMessage
 
-class ChatGPTAdapter : RecyclerView.Adapter<ChatGPTAdapter.ChatsViewHolder>() {
+class ChatGPTAdapter(private val onCardClick: OnChatSuggestionItemClickListener) :
+    RecyclerView.Adapter<ChatGPTAdapter.ChatsViewHolder>() {
 
     private val diffUtil = object : DiffUtil.ItemCallback<ChatMessage>() {
         override fun areItemsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean {
-            return oldItem.message == newItem.message
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: ChatMessage, newItem: ChatMessage): Boolean {
@@ -27,8 +28,11 @@ class ChatGPTAdapter : RecyclerView.Adapter<ChatGPTAdapter.ChatsViewHolder>() {
         get() = differ.currentList
         set(value) = differ.submitList(value)
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ChatsViewHolder {
+    interface OnChatSuggestionItemClickListener {
+        fun onChatSuggestionClicked(cardView: View, refillId: String, message: String)
+    }
 
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ChatsViewHolder {
         val itemBinding = ChatItemBinding.inflate(
             LayoutInflater.from(viewGroup.context),
             viewGroup, false
@@ -42,7 +46,7 @@ class ChatGPTAdapter : RecyclerView.Adapter<ChatGPTAdapter.ChatsViewHolder>() {
         position: Int
     ) {
         val chatMessage = chatDataSet[position]
-        chatViewHolder.bind(chatMessage)
+        chatViewHolder.bind(chatMessage, onCardClick)
     }
 
     override fun getItemCount() = chatDataSet.size
@@ -50,17 +54,22 @@ class ChatGPTAdapter : RecyclerView.Adapter<ChatGPTAdapter.ChatsViewHolder>() {
     inner class ChatsViewHolder(private val itemBinding: ChatItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
 
-        fun bind(message: ChatMessage) {
+        fun bind(chatMessage: ChatMessage, clickListener: OnChatSuggestionItemClickListener) {
             itemBinding.run {
-                if (message.sentBy == ChatMessage.SENT_BY_USER) {
+                if (chatMessage.sentBy == ChatMessage.SENT_BY_USER) {
                     itemBinding.chatBotItem.visibility = View.GONE
                     itemBinding.chatUserItem.visibility = View.VISIBLE
-                    itemBinding.userChatText.text = message.message
+                    itemBinding.userChatText.text = chatMessage.message
                 } else {
                     itemBinding.chatUserItem.visibility = View.GONE
                     itemBinding.chatBotItem.visibility = View.VISIBLE
-                    itemBinding.botChatText.text = message.message
+                    itemBinding.botChatText.text = chatMessage.message
                 }
+            }
+
+            itemView.setOnLongClickListener {
+                clickListener.onChatSuggestionClicked(itemView, chatMessage.id, chatMessage.message)
+                return@setOnLongClickListener true
             }
         }
     }

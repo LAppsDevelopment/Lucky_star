@@ -46,4 +46,12 @@
         <item name="cardBackgroundColor">@color/material_card_user_color</item>
     </style>
 
+    <style name="Material.TextView" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/user_text_color</item>
+    </style>
+
+    <style name="Chat.Button.Material.Custom" parent="ShapeAppearanceOverlay.Material3.Button">
+        <item name="android:drawableTint">@color/md_theme_light_primary</item>
+    </style>
+
 </resources>
