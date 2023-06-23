@@ -34,7 +34,7 @@
         <activity
             android:name=".ui.host.AppContainerActivity"
             android:exported="false"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/TextStyledTheme" />
 
         <activity
             android:name=".ui.host.IntroActivity"

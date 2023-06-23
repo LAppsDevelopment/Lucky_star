@@ -20,11 +20,24 @@ class DishRecipeViewModel @Inject constructor(
     private val _dishImageFlow = MutableSharedFlow<DishApiResponse?>(1)
     val dishImageFlow = _dishImageFlow.asSharedFlow()
 
-    fun pushImageSearch(userQuery: String) {
+    private val _chatResponse = MutableSharedFlow<String?>(1)
+    val chatResponse = _chatResponse.asSharedFlow()
+
+    fun setupFragmentViews(userQuery: String) {
         Log.e(TAG, "init started: ")
         viewModelScope.launch(Dispatchers.IO) {
             _dishImageFlow.emit((dishApiImpl.requestDishPhoto(userQuery))
             )
+        }
+
+        pushChatResponse()
+    }
+
+    private fun pushChatResponse() {
+        //todo implement chat response
+
+        viewModelScope.launch(Dispatchers.IO) {
+            _chatResponse.emit("chat response ;)")
         }
     }
 

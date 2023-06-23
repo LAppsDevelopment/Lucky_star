@@ -1,99 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:background="@color/md_theme_light_primary"
+        android:fitsSystemWindows="true"
+        android:theme="@style/TextStyledTheme">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsingtoolbarly"
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/md_theme_light_primary"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+            app:title="My Title">
 
-            <ImageView
-                android:id="@+id/dish_image"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="Dish Image"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop" />
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="190dp"
-                android:minHeight="190dp"
-                android:scaleType="fitXY"
-                app:layout_collapseMode="parallax" />
+                <ImageView
+                    android:id="@+id/dish_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:contentDescription="@string/dish_image"
+                    android:scaleType="centerCrop"
+                    app:layout_collapseMode="parallax" />
+            </FrameLayout>
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/my_toolbar"
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/transparent"
-                android:elevation="4dp"
+                android:layout_height="50dp"
                 android:layout_gravity="bottom"
-                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-                app:title="Spagetti" />
+                app:subtitle="SubTitle" />
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-
-
-        <!--  <LinearLayout
-              android:id="@+id/mylin"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
-
-              <View
-                  android:layout_width="fill_parent"
-                  android:layout_height="30dp" />-->
-
-        <!-- <LinearLayout
-             android:id="@+id/topLayout"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:orientation="horizontal">
-
-             <ImageButton
-                 android:id="@+id/btn_sil"
-                 android:layout_width="45dp"
-                 android:layout_height="45dp"
-                 android:gravity="center"
-                 android:paddingLeft="10dp"
-                 android:paddingTop="0dp"
-                 android:paddingRight="10dp"
-                 android:paddingBottom="15dp" />
-
-             <EditText
-                 android:id="@+id/et_word"
-                 android:layout_width="fill_parent"
-                 android:layout_height="wrap_content"
-                 android:background="@android:color/transparent"
-                 android:ems="12"
-                 android:gravity="center" />
-
-             <ImageButton
-                 android:id="@+id/btn_getir"
-                 android:layout_width="45dp"
-                 android:layout_height="45dp"
-                 android:gravity="center"
-                 android:paddingLeft="10dp"
-                 android:paddingTop="0dp"
-                 android:paddingRight="10dp"
-                 android:paddingBottom="15dp" />
-
-         </LinearLayout>-->
-        <!--
-                </LinearLayout>-->
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -102,33 +52,29 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!-- Your Scrollable contents should be here - such as,
-        ViewPager or etc -->
-
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/recipe_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
             android:layout_gravity="center"
-            android:textSize="30sp"
-            android:layout_marginHorizontal="20dp"
-
-            android:layout_marginTop="80dp"
-            android:text="Ingredients:
-
-8 ounces (225 grams) spaghetti \n
-2 tablespoons olive oil \n
-3 cloves garlic, minced\n
-1 small onion, finely chopped\n
-1 can (14 ounces/400 grams) diced tomatoes\n
-1 can (6 ounces/170 grams) tomato paste\n
-1 teaspoon dried basil\n
-1 teaspoon dried oregano\n
-1/2 teaspoon salt (or to taste)\n
-1/4 teaspoon black pepper (or to taste)\n
-1/4 teaspoon red pepper flakes (optional, for heat)\n
-1/4 cup grated Parmesan cheese (plus more for serving)\n
-Fresh basil leaves, chopped (for garnish)" />
+            android:gravity="center"
+            android:textSize="18sp" />
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/leave_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:contentDescription="@string/leave_fab"
+        android:focusable="true"
+        android:src="@android:drawable/ic_notification_clear_all"
+        app:fabSize="normal"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="end|bottom" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

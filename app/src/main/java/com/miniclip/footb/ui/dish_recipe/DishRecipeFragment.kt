@@ -9,8 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.miniclip.footb.R
 import com.miniclip.footb.databinding.FragmentDishRecipeBinding
 import com.miniclip.footb.viewmodels.DishRecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +24,10 @@ class DishRecipeFragment : Fragment() {
     private var _binding: FragmentDishRecipeBinding? = null
     private val binding get() = _binding!!
 
+    private val fabListener = View.OnClickListener {
+        findNavController().popBackStack()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,17 +40,31 @@ class DishRecipeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.pushImageSearch("spagetti")
+        //todo set passed dishName
+        val search = "tofu"
 
+        setToolbarTitle(search)
+
+        viewModel.setupFragmentViews(search)
+
+        launchFlowCollector()
+
+        binding.leaveFab.setOnClickListener(fabListener)
+    }
+
+    private fun launchFlowCollector() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.dishImageFlow.collectLatest {
-                        //todo set image
+                        val dishImageUrl = it?.photos?.getOrNull(0)?.src?.landscape.toString()
+                        setupToolbarImage(dishImageUrl)
+                    }
+                }
 
-                        val url = it?.photos?.getOrNull(0)?.src?.landscape
-
-                        setupToolbarImage(url)
+                launch {
+                    viewModel.chatResponse.collectLatest {
+                        binding.recipeTextView.text = it.toString()
                     }
                 }
             }
@@ -58,12 +76,12 @@ class DishRecipeFragment : Fragment() {
             .with(requireActivity())
             .load(url)
             .centerCrop()
-            .placeholder(R.drawable.ic_launcher_background)
-            .into(binding.dishImage);
+            .into(binding.dishImage)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun setToolbarTitle(userQuery: String) {
+        binding.collapsingToolbar.apply {
+            title = userQuery.uppercase()
+        }
     }
 }
