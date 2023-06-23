@@ -20,12 +20,16 @@ class ChatBotViewModel @Inject constructor(private val repository: ChatRepositor
 
     fun askChatBot(userMessages: List<Message>) {
         viewModelScope.launch {
-            val chatBotResponse = repository.getChatBotResponse(
-                userRequest = CompletionRequest(messages = userMessages)
-            )
+            try {
+                val chatBotResponse = repository.getChatBotResponse(
+                    userRequest = CompletionRequest(messages = userMessages)
+                )
 
-            if (chatBotResponse != null) {
-                _chatState.emit(chatBotResponse)
+                if (chatBotResponse != null) {
+                    _chatState.emit(chatBotResponse)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }

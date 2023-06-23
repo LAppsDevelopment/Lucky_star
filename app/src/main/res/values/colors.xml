@@ -62,6 +62,9 @@
     <color name="md_theme_dark_outlineVariant">#49454F</color>
     <color name="md_theme_dark_scrim">#000000</color>
 
+    <color name="edit_text_tint_color">#2D2D2D</color>
+
     <color name="color_chat_background">#F1FFF1</color>
     <color name="chat_title_text_color">#358F39</color>
+    <color name="material_card_user_color">#96FC9A</color>
 </resources>

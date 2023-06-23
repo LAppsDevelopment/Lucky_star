@@ -18,7 +18,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object OpenApiModule {
     private const val API_OPEN_AI_URL = "https://api.openai.com/"
-    private const val OPEN_AI_KEY = "yV8BE0TrLd4UwlSoeufMT3BlbkFJ5fSXtflvcSjlQ5RYzfut"
+    private const val OPEN_AI_KEY = "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"
 
     @Singleton
     @Provides

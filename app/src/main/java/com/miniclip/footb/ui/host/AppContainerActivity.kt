@@ -1,6 +1,7 @@
 package com.miniclip.footb.ui.host
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.miniclip.footb.databinding.ActivityAppContainerBinding
@@ -17,5 +18,11 @@ class AppContainerActivity : AppCompatActivity() {
 
         _binding = ActivityAppContainerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Set full screen
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 }

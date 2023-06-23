@@ -1,4 +1,5 @@
 <resources>
+
     <style name="AppTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
@@ -26,6 +27,12 @@
         <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
         <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
+
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="TextAppearance.ChatGPTApp.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
@@ -33,6 +40,10 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">32sp</item>
         <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="UserChatCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/material_card_user_color</item>
     </style>
 
 </resources>
