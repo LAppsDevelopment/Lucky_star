@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/menuFragment"
         android:name="com.miniclip.footb.ui.menu.MenuFragment"
-        android:label="MenuFragment" />
+        android:label="MenuFragment" >
+        <action
+            android:id="@+id/action_menuFragment_to_dishRecipeFragment"
+            app:destination="@id/dishRecipeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dishRecipeFragment"
+        android:name="com.miniclip.footb.ui.dish_recipe.DishRecipeFragment"
+        android:label="DishRecipeFragment" />
 </navigation>

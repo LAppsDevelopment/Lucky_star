@@ -20,6 +20,12 @@ class IntroActivity : AppCompatActivity(), ActivityCancellable {
             return
         }
 
+        /* TODO delete */
+        Intent(this, AppContainerActivity::class.java).apply {
+            startActivity(this)
+            finish()
+        }
+
         _binding = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }

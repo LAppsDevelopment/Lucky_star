@@ -13,6 +13,6 @@ interface MyImageApiRequests {
         @Header("Authorization") apiKey: String = ImageApiInstance.apiKey,
         @Query("query") userDish: String,
         @Query("page") pageWithImagesCount: Int = 1,
-        @Query("per_page") imagesCountPerPage: Int = 1
+        @Query("per_page") imagesCountPerPage: Int = 1,
     ): Response<DishApiResponse>
 }

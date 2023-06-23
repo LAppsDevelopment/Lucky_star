@@ -130,5 +130,6 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
     implementation("com.google.code.gson:gson:2.10.1")
 
+    implementation("com.github.bumptech.glide:glide:4.15.1")
     implementation("io.github.c0nnor263:obfustring-core:11.09")
 }
