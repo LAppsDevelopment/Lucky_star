@@ -1,8 +1,6 @@
 package com.miniclip.footb.ui.host
 
 import android.os.Bundle
-import android.util.Log
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.miniclip.footb.databinding.ActivityAppContainerBinding
@@ -38,6 +36,12 @@ class AppContainerActivity : AppCompatActivity() {
                 remoteHolder.remoteKeyHolder.openAPIKey = firebaseClient.getOpenAIKey()
             }
         }
+    }
+
+    fun killApp() {
+        val finishApp = android.os.Process.myPid()
+        finishAffinity()
+        android.os.Process.killProcess(finishApp)
     }
 
 }

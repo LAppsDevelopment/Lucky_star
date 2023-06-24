@@ -9,8 +9,9 @@ import android.webkit.WebView
 import com.miniclip.footb.back_callback.PageBackCallbackHandler
 import com.miniclip.footb.internet_view_preference.custom_view.CustomInternetChromeClient
 import com.miniclip.footb.internet_view_preference.custom_view.CustomInternetViewClient
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfustringThis
 import javax.inject.Inject
-
+@ObfustringThis
 class WideWebPreferences @Inject constructor(
     private val pageBackCallbackHandler: PageBackCallbackHandler,
     private val customInternetViewClient: CustomInternetViewClient,

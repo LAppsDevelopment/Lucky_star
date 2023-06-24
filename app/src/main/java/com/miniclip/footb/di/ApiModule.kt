@@ -2,6 +2,7 @@ package com.miniclip.footb.di
 
 import com.miniclip.footb.BuildConfig
 import com.miniclip.footb.services.network.RemoteApi
+import com.miniclip.footb.services.network.RetryRequestInterceptor
 import com.miniclip.footb.ui.intro_screen.repository.IntroRepository
 import dagger.Module
 import dagger.Provides
@@ -33,11 +34,19 @@ object ApiModule {
 
     @Singleton
     @Provides
+    fun provideRetryRequestInterceptor() = RetryRequestInterceptor()
+
+    @Singleton
+    @Provides
     @Named(OK_HTTP_NAME)
-    fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+    fun providesOkHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        retryRequestInterceptor: RetryRequestInterceptor
+    ): OkHttpClient =
         OkHttpClient
             .Builder()
             .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(retryRequestInterceptor)
             .build()
 
     @Singleton

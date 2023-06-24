@@ -1,6 +1,5 @@
 package com.miniclip.footb.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.miniclip.footb.model.TrackingData
