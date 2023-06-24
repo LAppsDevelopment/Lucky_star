@@ -2,6 +2,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven(url = "https://jitpack.io")
     }
     dependencies {
         classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.6")

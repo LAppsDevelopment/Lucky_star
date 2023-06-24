@@ -132,4 +132,5 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.15.1")
     implementation("io.github.c0nnor263:obfustring-core:11.09")
+    implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
 }

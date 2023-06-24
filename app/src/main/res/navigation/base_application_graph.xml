@@ -32,4 +32,8 @@
         android:id="@+id/dishRecipeFragment"
         android:name="com.miniclip.footb.ui.dish_recipe.DishRecipeFragment"
         android:label="DishRecipeFragment" />
+    <fragment
+        android:id="@+id/dishArticleFragment"
+        android:name="com.miniclip.footb.ui.dish_article.DishArticleFragment"
+        android:label="DishArticleFragment" />
 </navigation>
