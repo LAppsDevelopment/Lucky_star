@@ -1,6 +1,7 @@
 package com.miniclip.footb.ui.dish_recipe
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import androidx.navigation.fragment.navArgs
 import com.miniclip.footb.databinding.FragmentDishRecipeBinding
 import com.miniclip.footb.viewmodels.DishRecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,10 +30,16 @@ class DishRecipeFragment : Fragment() {
         findNavController().popBackStack()
     }
 
+    private val chatReceipt: DishRecipeFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        // TODO Chat response with full receipt string
+        val getReceipt = chatReceipt.aiResponse
+        Log.d("ASD", "MESSAGE = $getReceipt")
 
         _binding = FragmentDishRecipeBinding.inflate(inflater, container, false)
         return binding.root

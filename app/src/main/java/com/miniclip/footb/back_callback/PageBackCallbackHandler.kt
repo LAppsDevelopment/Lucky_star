@@ -14,7 +14,6 @@ class PageBackCallbackHandler @Inject constructor() {
     private var backStepEnable = false
     private val valueChangeDelay = 2002L
 
-    //TODO call from WebActivity
     fun setCustomCallback(basePageUrl: String, webView: WebView) {
         val mActivity = extractWebViewActivity(webView)
 

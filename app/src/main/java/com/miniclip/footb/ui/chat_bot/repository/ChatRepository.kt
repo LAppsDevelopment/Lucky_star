@@ -9,7 +9,7 @@ import javax.inject.Inject
 class ChatRepository @Inject constructor(private val chatAPI: ChatGPTApi) {
 
     suspend fun getChatBotResponse(userRequest: CompletionRequest): CompletionResponse? = try {
-        chatAPI.completion(userRequest)
+        chatAPI.simpleChatGPTQuestion(userRequest)
     } catch (e: Exception) {
         e.printStackTrace()
         FirebaseCrashlytics.getInstance().recordException(e)

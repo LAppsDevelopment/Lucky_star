@@ -1,4 +1,3 @@
-
 <resources>
     <color name="seed">#6750A4</color>
     <color name="md_theme_light_primary">#6750A4</color>
@@ -62,7 +61,13 @@
     <color name="md_theme_dark_outlineVariant">#49454F</color>
     <color name="md_theme_dark_scrim">#000000</color>
 
+    <color name="edit_text_tint_color">#2D2D2D</color>
+    <color name="user_text_color">#151515</color>
+
+    <color name="color_status_bar">#4A4A4A</color>
+
     <color name="color_chat_background">#F1FFF1</color>
     <color name="chat_title_text_color">#358F39</color>
     <color name="article_title_back">#CDCDCD</color>
+    <color name="material_card_user_color">#96FC9A</color>
 </resources>

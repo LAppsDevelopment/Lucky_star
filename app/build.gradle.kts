@@ -9,6 +9,7 @@ plugins {
     id("com.google.firebase.crashlytics")
     id("com.onesignal.androidsdk.onesignal-gradle-plugin")
     id("io.github.c0nnor263.obfustring-plugin")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 val localProperties = Properties()

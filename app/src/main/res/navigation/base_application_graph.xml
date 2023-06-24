@@ -19,19 +19,33 @@
             app:enterAnim="@anim/menu_slide_from_right"
             app:exitAnim="@anim/menu_slide_out_left"
             app:popEnterAnim="@anim/menu_slide_from_left"
-            app:popExitAnim="@anim/menu_slide_out_right"
-            app:destination="@id/chatFragment" />
+            app:popExitAnim="@anim/menu_slide_out_right" />
     </fragment>
 
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.miniclip.footb.ui.chat_bot.ChatBotFragment"
         android:label="ChatFragment"
-        tools:layout="@layout/fragment_chat_bot" />
+        tools:layout="@layout/fragment_chat_bot">
+
+        <action
+            android:id="@+id/chat_to_receipt"
+            app:destination="@id/dishRecipeFragment" /> <!-- TODO EDIT DEFAULT VALUE IF NEED IT-->
+
+    </fragment>
+
     <fragment
         android:id="@+id/dishRecipeFragment"
         android:name="com.miniclip.footb.ui.dish_recipe.DishRecipeFragment"
-        android:label="DishRecipeFragment" />
+        android:label="DishRecipeFragment">
+
+        <argument
+            android:name="aiResponse"
+            android:defaultValue="Receipt is empty"
+            app:argType="string" />
+
+    </fragment>
+
     <fragment
         android:id="@+id/dishArticleFragment"
         android:name="com.miniclip.footb.ui.dish_article.DishArticleFragment"

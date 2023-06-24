@@ -7,5 +7,5 @@ import retrofit2.http.POST
 
 interface ChatGPTApi {
     @POST("/v1/chat/completions")
-    suspend fun completion(@Body request: CompletionRequest): CompletionResponse
+    suspend fun simpleChatGPTQuestion(@Body request: CompletionRequest): CompletionResponse
 }

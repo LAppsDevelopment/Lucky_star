@@ -5,9 +5,10 @@
     <string name="content_description">Description for main hero loader image</string>
     <string name="loading_txt">Loading</string>
     <string name="use_chat_btn_txt">Use chat</string>
-    <string name="chat_bot_by_openai_title_txt">Chat bot by OpenAI</string>
+    <string name="chat_bot_by_openai_title_txt">OpenAI receipt chat</string>
     <string name="ask_question_txt">Ask question…</string>
     <string name="content_description_icon">send to chat icon</string>
     <string name="leave_fab">Leave Fab</string>
     <string name="dish_image">Dish Image</string>
+    <string name="get_more_information_txt">Get more information</string>
 </resources>
