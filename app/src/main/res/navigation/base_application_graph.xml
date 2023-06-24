@@ -21,6 +21,13 @@
             app:destination="@+id/chatFragment"
             app:popEnterAnim="@anim/menu_slide_from_left"
             app:popExitAnim="@anim/menu_slide_out_right" />
+        <action
+            android:id="@+id/menu_to_article"
+            app:destination="@id/dishArticleFragment"
+            app:enterAnim="@anim/menu_slide_from_right"
+            app:exitAnim="@anim/menu_slide_out_left"
+            app:popEnterAnim="@anim/menu_slide_from_left"
+            app:popExitAnim="@anim/menu_slide_out_right"/>
     </fragment>
 
     <fragment
@@ -55,5 +62,10 @@
     <fragment
         android:id="@+id/dishArticleFragment"
         android:name="com.miniclip.footb.ui.dish_article.DishArticleFragment"
-        android:label="DishArticleFragment" />
+        android:label="DishArticleFragment">
+        <argument
+            android:name="articleName"
+            android:defaultValue="Top dishes to prepare in the morning"
+            app:argType="string" />
+    </fragment>
 </navigation>

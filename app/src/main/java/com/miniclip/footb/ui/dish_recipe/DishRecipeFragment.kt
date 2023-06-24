@@ -11,9 +11,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import androidx.navigation.fragment.navArgs
 import com.miniclip.footb.databinding.FragmentDishRecipeBinding
+import com.miniclip.footb.services.loadWithGlide
 import com.miniclip.footb.viewmodels.DishRecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -67,19 +67,12 @@ class DishRecipeFragment : Fragment() {
                 launch {
                     viewModel.dishImageFlow.collectLatest {
                         val dishImageUrl = it?.photos?.getOrNull(0)?.src?.landscape.toString()
-                        setupToolbarImage(dishImageUrl)
+
+                        loadWithGlide(url = dishImageUrl, view = binding.dishImage, activity = requireActivity())
                     }
                 }
             }
         }
-    }
-
-    private fun setupToolbarImage(url: String?) {
-        Glide
-            .with(requireActivity())
-            .load(url)
-            .centerCrop()
-            .into(binding.dishImage)
     }
 
     private fun String.setRecipeText() {

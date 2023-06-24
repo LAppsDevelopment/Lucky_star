@@ -5,7 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.miniclip.footb.model.api.DishApiResponse
+import com.miniclip.footb.model.open_ai_api.CompletionRequest
+import com.miniclip.footb.model.open_ai_api.Message
 import com.miniclip.footb.services.image_api.DishApiImpl
+import com.miniclip.footb.ui.chat_bot.getChefGPTPrompt
+import com.miniclip.footb.ui.chat_bot.repository.ChatRepository
+import com.miniclip.footb.ui.chat_bot.systemRole
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,10 +21,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DishArticleViewModel @Inject constructor(
+    private val botRepository: ChatRepository,
     private val dishApiImpl: DishApiImpl
 ) : ViewModel() {
     private val _dishImagesFlow = MutableSharedFlow<List<SlideModel>>(1)
     val dishImagesFlow = _dishImagesFlow.asSharedFlow()
+
+    private val _chatResponseFlow = MutableSharedFlow<String>(1)
+    val chatResponseFlow = _chatResponseFlow.asSharedFlow()
 
     fun getImageList(articleName: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -33,11 +42,36 @@ class DishArticleViewModel @Inject constructor(
 
             dishResponse?.let {
                 it.photos.forEach { photo ->
-                    convertedMap.add(SlideModel(imageUrl = photo.src.landscape, title = photo.photographer, ScaleTypes.CENTER_CROP))
+                    convertedMap.add(
+                        SlideModel(
+                            imageUrl = photo.src.landscape,
+                            title = photo.photographer,
+                            ScaleTypes.CENTER_CROP
+                        )
+                    )
                 }
             }
 
             _dishImagesFlow.emit(convertedMap)
+        }
+    }
+
+    fun getChatGeneratedArticle(articleName: String) {
+        viewModelScope.launch {
+            try {
+                val mMessageList =
+                    listOf(Message(role = systemRole, getChefGPTPrompt()), Message(content = articleName))
+
+                val articleResponse = botRepository.getChatBotResponse(
+                    userRequest = CompletionRequest(messages = mMessageList)
+                )
+
+                if (articleResponse != null) {
+                    _chatResponseFlow.emit(articleResponse.choices[0].message.content)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 }

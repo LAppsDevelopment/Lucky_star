@@ -70,4 +70,6 @@
     <color name="chat_title_text_color">#358F39</color>
     <color name="article_title_back">#CDCDCD</color>
     <color name="material_card_user_color">#96FC9A</color>
+    <color name="card_text_back">#C9F1FFF1</color>
+    <color name="black">#090909</color>
 </resources>
