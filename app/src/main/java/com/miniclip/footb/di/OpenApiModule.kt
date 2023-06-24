@@ -1,6 +1,7 @@
 package com.miniclip.footb.di
 
 import com.miniclip.footb.model.AuthInterceptor
+import com.miniclip.footb.model.open_ai_api.HolderManager
 import com.miniclip.footb.services.open_ai.ChatGPTApi
 import com.miniclip.footb.ui.chat_bot.repository.ChatRepository
 import dagger.Module
@@ -17,12 +18,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object OpenApiModule {
     private const val API_OPEN_AI_URL = "https://api.openai.com/"
-    // TODO ADD TO FIREBASE REMOTE CONFIG
-    private const val OPEN_AI_KEY = "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"
+
+    @Provides
+    @Singleton
+    fun provideRemoteHolder(): HolderManager = HolderManager()
 
     @Singleton
     @Provides
-    fun provideAuthInterceptor(): AuthInterceptor = AuthInterceptor("Bearer", OPEN_AI_KEY)
+    fun provideAuthInterceptor(holderManager: HolderManager): AuthInterceptor =
+        AuthInterceptor("Bearer", holderManager.remoteKeyHolder.openAPIKey)
 
     @Singleton
     @Provides

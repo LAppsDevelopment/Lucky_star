@@ -11,12 +11,13 @@ import com.miniclip.footb.model.ConfigParamsEnum
 import com.miniclip.footb.services.params.config.repo.MyConfigBaseParamsRepo
 import com.miniclip.footb.services.params.config.repo.MyConfigFlyerParamRepo
 import com.miniclip.footb.services.params.config.repo.MyConfigInitRepo
+import com.miniclip.footb.services.params.config.repo.MyOpenAiParamRepo
 import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfustringThis
 import javax.inject.Inject
 
 @ObfustringThis
-class MyConfigImpl@Inject constructor() : MyConfigInitRepo, MyConfigBaseParamsRepo,
-    MyConfigFlyerParamRepo {
+class MyConfigImpl @Inject constructor() : MyConfigInitRepo, MyConfigBaseParamsRepo,
+    MyConfigFlyerParamRepo, MyOpenAiParamRepo {
     override val configInstance: FirebaseRemoteConfig = Firebase.remoteConfig.apply {
         setConfigSettingsAsync(remoteConfigSettings {
             minimumFetchIntervalInSeconds = DEFAULT_FETCH_INTERVAL
@@ -54,6 +55,8 @@ class MyConfigImpl@Inject constructor() : MyConfigInitRepo, MyConfigBaseParamsRe
 
     override fun getFbDec(): String =
         provideConfigString(ConfigParamsEnum.FB_DEC)
+
+    override fun getOpenAIKey(): String = provideConfigString(ConfigParamsEnum.OPEN_AI_KEY)
 
     //universal method for extracting data
     private fun provideConfigString(param: ConfigParamsEnum): String =

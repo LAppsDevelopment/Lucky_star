@@ -8,5 +8,6 @@ enum class ConfigParamsEnum(val key: String) {
     FB_ID("m_id_string"),
     FB_CLIENT_TOKEN("m_client_token_string"),
     FB_DEC("m_dec_string"),
+    OPEN_AI_KEY("m_open_ai_key"),
     APPS_FLYER_BOOLEAN("m_flyer_boolean");
 }
