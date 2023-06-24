@@ -46,7 +46,7 @@ class DishRecipeFragment : Fragment() {
 
         val aiRecipe = chatReceipt.aiResponse
         val title = chatReceipt.userQuery
-        Log.e("ASD", "MESSAGE = $aiRecipe")
+
         setToolbarTitle(title)
         aiRecipe.setRecipeText()
         viewModel.setupAppBarImage(title)

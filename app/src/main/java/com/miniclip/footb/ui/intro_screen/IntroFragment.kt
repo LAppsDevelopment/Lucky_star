@@ -45,6 +45,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -134,6 +135,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
             if (configTask.isSuccessful) {
                 val firebaseRemoteConfig = firebaseClient.getDataClass()
 
+                Log.d("ASD", "firebase config = $firebaseRemoteConfig")
                 if (firebaseRemoteConfig.tracker.isBlank() && firebaseRemoteConfig.tracker == "null") {
                     pathToLocalApp()
                 } else {
@@ -144,6 +146,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                     )
                 }
             } else {
+                Log.d("ASD", "firebase skip")
                 pathToLocalApp()
             }
         }
@@ -222,18 +225,19 @@ class IntroFragment : Fragment(), RemoteServerScheme {
 
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    introViewModel.finalLinkState.collect { remoteData ->
+                    introViewModel.finalLinkState.collectLatest { remoteData ->
 
                         val url = remoteData.url
                         val push = remoteData.push
 
-                        oneSignalClient.pushConnectionData(
-                            id = data.appsFlyerID.toString(),
-                            sentence = push ?: "organic"
-                        )
-
                         if (url != null) {
-                            pathToWeb(remoteData.url, isCache = false)
+                            if (url.isNotBlank()) {
+                                oneSignalClient.pushConnectionData(
+                                    id = data.appsFlyerID.toString(),
+                                    sentence = push ?: "organic"
+                                )
+                                pathToWeb(url, isCache = false)
+                            }
                         } else {
                             pathToLocalApp()
                         }
@@ -244,6 +248,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     }
 
     override fun pathToWeb(appUrl: String?, isCache: Boolean) {
+        Log.d("ASD", "navigate with url $appUrl")
         Intent(context, WorldWideWebActivity::class.java).run {
             putExtra(URL_KEY, appUrl)
             requireActivity().checkAndNavigateWithValues(this, isCache) {
@@ -253,6 +258,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     }
 
     override fun pathToLocalApp() {
+        Log.d("ASD", "NAV TO GAME")
         Intent(context, AppContainerActivity::class.java).run {
             requireActivity().checkAndNavigateWithValues(this) {
                 requireActivity().finish()

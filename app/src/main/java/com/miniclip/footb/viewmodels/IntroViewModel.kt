@@ -28,11 +28,12 @@ class IntroViewModel @Inject constructor(
 
     fun getRemoteData(dataToSend: TrackingData) = viewModelScope.launch(Dispatchers.IO) {
         val serverResponse = repository.getData(dataToSend)
-        Log.e("IntroViewModel", "getRemoteData: serverResponse : $serverResponse")
+
         try {
             _finalLinkState.emit(serverResponse)
         } catch (e: Exception) {
             e.printStackTrace()
+            _finalLinkState.emit(ResponseData(null, null))
         }
     }
 

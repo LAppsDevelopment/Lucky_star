@@ -21,13 +21,9 @@ class DishRecipeViewModel @Inject constructor(
     val dishImageFlow = _dishImageFlow.asSharedFlow()
 
     fun setupAppBarImage(userQuery: String) {
-        Log.e(TAG, "init started: ")
         viewModelScope.launch(Dispatchers.IO) {
             _dishImageFlow.emit((dishApiImpl.requestDishPhoto(userQuery)))
         }
     }
 
-    companion object {
-        private const val TAG = "DishRecipeViewModel"
-    }
 }

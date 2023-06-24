@@ -43,7 +43,6 @@ class ChatBotFragment : Fragment(), ChatGPTAdapter.OnChatSuggestionItemClickList
     ): View? {
         _binding = FragmentChatBotBinding.inflate(inflater, container, false)
 
-        requireActivity().window.clearFlags(FLAG_LAYOUT_NO_LIMITS)
         requireActivity().window.clearFlags(FLAG_TRANSLUCENT_STATUS)
         requireActivity().window.statusBarColor = resources.getColor(R.color.color_chat_background)
 
