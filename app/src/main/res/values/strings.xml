@@ -10,4 +10,9 @@
     <string name="leave_fab">Leave Fab</string>
     <string name="dish_image">Dish Image</string>
     <string name="get_more_information_txt">Get more information</string>
+    <string name="open">Open</string>
+    <string name="loading_article_title">Loading article title…</string>
+    <string name="article_image">Article Image</string>
+    <string name="top_dishes_to_prepare_in_the_morning">Top dishes to prepare in the morning</string>
+    <string name="wait_a_second_i_m_thinking">Wait a second, I\'m thinking…</string>
 </resources>
