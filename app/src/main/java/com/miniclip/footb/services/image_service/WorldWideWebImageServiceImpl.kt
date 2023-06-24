@@ -79,7 +79,7 @@ class WorldWideWebImageServiceImpl @Inject constructor(@ApplicationContext val c
 
     override fun setImageIntentWithProvider(context: Context, intent: Intent, imageFile: File) {
         val providerUriLink = FileProvider.getUriForFile(
-            context, "${context.packageName}.provider", imageFile
+            context, "${context.packageName}.lucky_star_provider", imageFile
         )
         intent.apply {
             putExtra(MediaStore.EXTRA_OUTPUT, providerUriLink)

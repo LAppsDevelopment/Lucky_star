@@ -43,8 +43,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textview.MaterialTextView
-            style="@style/Material.TextView"
             android:id="@+id/user_chat_text"
+            style="@style/Material.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"

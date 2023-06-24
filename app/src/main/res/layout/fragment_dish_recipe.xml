@@ -13,7 +13,6 @@
         android:theme="@style/TextStyledTheme">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/md_theme_light_primary"
@@ -27,7 +26,6 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/dish_image"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:contentDescription="@string/dish_image"
@@ -37,7 +35,6 @@
 
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
@@ -53,7 +50,6 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
-            android:id="@+id/recipe_text_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="35dp"
@@ -65,7 +61,6 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/leave_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

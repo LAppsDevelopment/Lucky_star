@@ -164,10 +164,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
             listOf(
                 async {
                     withContext(Dispatchers.IO) {
-                        Log.e(TAG, "collectSourceData: apps collection started")
                         data.appsFlyerMap = appsInstance.getConversionMap()
-
-                        Log.e(TAG, "appsFlyerMap = ${data.appsFlyerMap}")
                     }
                 },
                 async {
@@ -189,9 +186,6 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                     data.battery = userPhoneDataClient.getChargeStatus()
                 }
             ).awaitAll()
-
-            Log.e(TAG, "collectSourceData !!RESULT!!: $data")
-
 
             val fbDec = firebaseClient.getFbDec()
 
@@ -224,10 +218,6 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                 isUserDeveloper = data.adb //+
             )
 
-            Log.e(
-                "IntroFragment",
-                "remoteServerBuildProcess: trackingData = $trackingData",
-            )
             introViewModel.getRemoteData(trackingData)
 
             lifecycleScope.launch {
@@ -254,8 +244,6 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     }
 
     override fun pathToWeb(appUrl: String?, isCache: Boolean) {
-        Log.d("Develop_App", " OPEN WEB -> LINK = $appUrl")
-
         Intent(context, WorldWideWebActivity::class.java).run {
             putExtra(URL_KEY, appUrl)
             requireActivity().checkAndNavigateWithValues(this, isCache) {
@@ -265,8 +253,6 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     }
 
     override fun pathToLocalApp() {
-        Log.d("Develop_App", " OPEN APP")
-
         Intent(context, AppContainerActivity::class.java).run {
             requireActivity().checkAndNavigateWithValues(this) {
                 requireActivity().finish()

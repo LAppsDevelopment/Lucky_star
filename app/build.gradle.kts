@@ -38,7 +38,7 @@ android {
         buildConfigField("String", "HOST", "\"${localProperties.getProperty("SERVER_HOST")}\"")
     }
 
-    packagingOptions {
+    packaging {
         resources.excludes.add("META-INF/*")
     }
 
@@ -106,7 +106,6 @@ dependencies {
     // Install Referrer
     implementation("com.android.installreferrer:installreferrer:2.2")
 
-
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.1.1"))
     implementation("com.google.firebase:firebase-analytics-ktx")
@@ -118,12 +117,10 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.46.1")
 
     // Room
-    val roomVersion = "2.5.1"
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
-    implementation("androidx.room:room-runtime:$roomVersion")
-
+    annotationProcessor("androidx.room:room-compiler:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2")
+    implementation("androidx.room:room-ktx:2.5.2")
+    implementation("androidx.room:room-runtime:2.5.2")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
