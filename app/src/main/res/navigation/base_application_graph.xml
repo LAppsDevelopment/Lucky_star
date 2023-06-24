@@ -18,6 +18,7 @@
             android:id="@+id/menu_to_chat"
             app:enterAnim="@anim/menu_slide_from_right"
             app:exitAnim="@anim/menu_slide_out_left"
+            app:destination="@+id/chatFragment"
             app:popEnterAnim="@anim/menu_slide_from_left"
             app:popExitAnim="@anim/menu_slide_out_right" />
     </fragment>
@@ -42,6 +43,11 @@
         <argument
             android:name="aiResponse"
             android:defaultValue="Receipt is empty"
+            app:argType="string" />
+
+        <argument
+            android:name="userQuery"
+            android:defaultValue="User query is empty"
             app:argType="string" />
 
     </fragment>

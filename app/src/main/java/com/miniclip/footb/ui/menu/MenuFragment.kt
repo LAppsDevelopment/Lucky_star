@@ -34,13 +34,6 @@ class MenuFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        /* TODO delete before commit */
-        findNavController().navigate(R.id.action_menuFragment_to_dishRecipeFragment)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

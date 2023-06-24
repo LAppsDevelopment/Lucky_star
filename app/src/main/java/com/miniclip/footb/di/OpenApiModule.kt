@@ -11,7 +11,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -19,7 +18,7 @@ import javax.inject.Singleton
 object OpenApiModule {
     private const val API_OPEN_AI_URL = "https://api.openai.com/"
     // TODO ADD TO FIREBASE REMOTE CONFIG
-    private const val OPEN_AI_KEY = "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"
+    private const val OPEN_AI_KEY = "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"
 
     @Singleton
     @Provides

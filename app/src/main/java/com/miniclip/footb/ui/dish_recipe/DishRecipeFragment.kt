@@ -37,10 +37,6 @@ class DishRecipeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        // TODO Chat response with full receipt string
-        val getReceipt = chatReceipt.aiResponse
-        Log.d("ASD", "MESSAGE = $getReceipt")
-
         _binding = FragmentDishRecipeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -48,16 +44,21 @@ class DishRecipeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //todo set passed dishName
-        val search = "tofu"
-
-        setToolbarTitle(search)
-
-        viewModel.setupFragmentViews(search)
+        val aiRecipe = chatReceipt.aiResponse
+        val title = chatReceipt.userQuery
+        Log.e("ASD", "MESSAGE = $aiRecipe")
+        setToolbarTitle(title)
+        aiRecipe.setRecipeText()
+        viewModel.setupAppBarImage(title)
 
         launchFlowCollector()
 
         binding.leaveFab.setOnClickListener(fabListener)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     private fun launchFlowCollector() {
@@ -67,12 +68,6 @@ class DishRecipeFragment : Fragment() {
                     viewModel.dishImageFlow.collectLatest {
                         val dishImageUrl = it?.photos?.getOrNull(0)?.src?.landscape.toString()
                         setupToolbarImage(dishImageUrl)
-                    }
-                }
-
-                launch {
-                    viewModel.chatResponse.collectLatest {
-                        binding.recipeTextView.text = it.toString()
                     }
                 }
             }
@@ -85,6 +80,10 @@ class DishRecipeFragment : Fragment() {
             .load(url)
             .centerCrop()
             .into(binding.dishImage)
+    }
+
+    private fun String.setRecipeText() {
+        binding.recipeTextView.text = this
     }
 
     private fun setToolbarTitle(userQuery: String) {

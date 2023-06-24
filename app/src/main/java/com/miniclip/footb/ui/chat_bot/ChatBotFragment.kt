@@ -89,6 +89,7 @@ class ChatBotFragment : Fragment(), ChatGPTAdapter.OnChatSuggestionItemClickList
     }
 
     private fun askGPT(userQuestion: String) {
+        chatViewModel.savedUserQuery = userQuestion
         chatMessagesList.add(ChatMessage(message = "Typing...", sentBy = ChatMessage.SENT_BY_CHAT))
 
         chatViewModel.askChatBot(Message(content = userQuestion))
@@ -139,7 +140,7 @@ class ChatBotFragment : Fragment(), ChatGPTAdapter.OnChatSuggestionItemClickList
     }
 
     private fun openSuggestionButton(message: String) {
-        val directions = ChatBotFragmentDirections.chatToReceipt(aiResponse = message)
+        val directions = ChatBotFragmentDirections.chatToReceipt(aiResponse = message, userQuery = chatViewModel.savedUserQuery)
         findNavController().navigate(directions)
         binding.moreInfo.visibility = View.GONE
     }

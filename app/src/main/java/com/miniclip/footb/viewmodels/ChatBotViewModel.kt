@@ -2,6 +2,7 @@ package com.miniclip.footb.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.miniclip.footb.model.ChatBotData
 import com.miniclip.footb.model.open_ai_api.CompletionRequest
 import com.miniclip.footb.model.open_ai_api.CompletionResponse
 import com.miniclip.footb.model.open_ai_api.Message
@@ -16,10 +17,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChatBotViewModel @Inject constructor(private val repository: ChatRepository) : ViewModel() {
-
+    private val chatBotData = ChatBotData()
     private val _chatState = MutableStateFlow<CompletionResponse?>(null)
     val chatState = _chatState.asStateFlow()
 
+    var savedUserQuery: String
+        get() = chatBotData.userQuery
+        set(sd) {
+            chatBotData.userQuery = sd
+        }
     fun askChatBot(userMessagePrompt: Message) {
         viewModelScope.launch {
             try {
