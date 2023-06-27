@@ -12,6 +12,8 @@ import kotlinx.coroutines.runBlocking
 object NotificationMessageManager {
     var signalValue: String = NotificationTypes.FIRST_OPEN.description
     var pushIntent: Intent? = null
+    val camp: String = "&campaign="
+    val subTen: String = "&sub10="
 
     const val URL_KEY = "URL_NOTIFY_KEY"
 
@@ -27,20 +29,15 @@ object NotificationMessageManager {
             val intentToActivity = Intent(application, T::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
                         Intent.FLAG_ACTIVITY_NEW_TASK
-                link = link.changeLink()
+                link = changeLink(link)
                 putExtra(URL_KEY, link)
             }
             pushIntent = intentToActivity
         }
     }
 
-    fun String.changeLink(): String {
-        val sub = this.substringBefore("&campaign=").substringAfter("&sub10=")
-        return if (sub == "sub10")
-            this.replace("&sub10=sub10", "&sub10=$signalValue")
-        else if (sub.isNotEmpty())
-            this.replace(sub, signalValue)
-        else
-            this.replace("&sub10=", "&sub10=$signalValue")
+    fun changeLink(link: String): String {
+        val mainWithSignal =  link.substringBefore(camp).replaceAfter(subTen, signalValue)
+        return link.replaceBefore(camp, mainWithSignal)
     }
 }

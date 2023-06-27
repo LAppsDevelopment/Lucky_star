@@ -23,8 +23,9 @@ import com.miniclip.footb.databinding.FragmentIntroBinding
 import com.miniclip.footb.model.CollectDataForLink
 import com.miniclip.footb.model.ConfigData
 import com.miniclip.footb.model.TrackingData
-import com.miniclip.footb.services.analytic.NotificationMessageManager
 import com.miniclip.footb.services.analytic.NotificationMessageManager.URL_KEY
+import com.miniclip.footb.services.analytic.NotificationMessageManager.changeLink
+import com.miniclip.footb.services.analytic.NotificationMessageManager.signalValue
 import com.miniclip.footb.services.analytic.NotificationTypes
 import com.miniclip.footb.services.analytic.checkAndNavigateWithValues
 import com.miniclip.footb.services.extensions.g_param.AdvertisingParamImpl
@@ -122,9 +123,9 @@ class IntroFragment : Fragment(), RemoteServerScheme {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 introViewModel.savedUrlState.collect { url ->
                     if (url.isNullOrBlank().not()) {
-                        NotificationMessageManager.signalValue =
+                        signalValue =
                             NotificationTypes.DIRECT_OPEN.description
-                        pathToWeb(url, isCache = true)
+                        pathToWeb(changeLink(url.toString()), isCache = true)
                         return@collect
                     } else {
                         remoteServerBuildProcess()
@@ -211,7 +212,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                     appDeveloperKey = APPS_FLYER_DEV_KEY,
                     userBattery = data.battery.toString(),
                     remoteConfig = ConfigData(
-                        tracker = extractedTracker, // todo check .isNotEmpty or .isNotBlank?
+                        tracker = extractedTracker,
                         isAppsFlyerEnabled = firebaseRemoteConfig.isAppsFlyerEnabled,
                         fbAppId = checkRemoteFirebaseString(
                             remote = firebaseRemoteConfig.fbAppId,
@@ -241,7 +242,9 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                                         id = data.appsFlyerID.toString(),
                                         sentence = push ?: "organic"
                                     )
-                                    pathToWeb(url, isCache = false)
+
+                                    signalValue = NotificationTypes.FIRST_OPEN.description
+                                    pathToWeb(changeLink(url), isCache = false)
                                 }
                             } else {
                                 pathToLocalApp()
@@ -298,8 +301,5 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
     }
 }
