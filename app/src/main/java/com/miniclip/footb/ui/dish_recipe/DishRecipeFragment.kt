@@ -67,7 +67,12 @@ class DishRecipeFragment : Fragment() {
                     viewModel.dishImageFlow.collectLatest {
                         val dishImageUrl = it?.photos?.getOrNull(0)?.src?.landscape.toString()
 
-                        loadWithGlide(url = dishImageUrl, view = binding.dishImage, activity = requireActivity())
+                        with(requireActivity()) {
+                            loadWithGlide(
+                                url = dishImageUrl,
+                                view = binding.dishImage
+                            )
+                        }
                     }
                 }
             }

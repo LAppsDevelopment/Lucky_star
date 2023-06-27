@@ -58,11 +58,12 @@ class ArticlesAdapter(
                     dishApiImpl.requestDishPhoto(string)?.photos?.getOrNull(0)?.src?.landscape
             }.await()
 
-            loadWithGlide(
-                url = imageUrl,
-                view = this@setApiImage,
-                activity = menuFragment.requireActivity()
-            )
+            with(menuFragment.requireActivity()) {
+                loadWithGlide(
+                    url = imageUrl,
+                    view = this@setApiImage
+                )
+            }
         }
     }
 

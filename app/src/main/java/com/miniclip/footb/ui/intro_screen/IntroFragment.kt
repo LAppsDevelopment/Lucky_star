@@ -29,7 +29,7 @@ import com.miniclip.footb.services.analytic.NotificationTypes
 import com.miniclip.footb.services.analytic.checkAndNavigateWithValues
 import com.miniclip.footb.services.extensions.g_param.AdvertisingParamImpl
 import com.miniclip.footb.services.extensions.phone_param.PhoneExtensionImpl
-import com.miniclip.footb.services.params.config.MyConfigImpl
+import com.miniclip.footb.services.params.config.FirebaseConfigImpl
 import com.miniclip.footb.services.params.long_awaited.m_apps_flyer.MyAppsFlyerImpl
 import com.miniclip.footb.services.params.long_awaited.m_apps_flyer.MyAppsFlyerImpl.Companion.APPS_FLYER_DEV_KEY
 import com.miniclip.footb.services.params.long_awaited.m_fb.MyFbImpl
@@ -72,7 +72,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     lateinit var facebookClient: MyFbImpl
 
     @Inject
-    lateinit var firebaseClient: MyConfigImpl
+    lateinit var firebaseClient: FirebaseConfigImpl
 
     @Inject
     lateinit var googleAdIdClient: AdvertisingParamImpl
@@ -195,57 +195,62 @@ class IntroFragment : Fragment(), RemoteServerScheme {
 
             val fbDec = firebaseClient.getFbDec()
 
-            val trackingData = TrackingData(
-                facebookDeeplink = data.deeplink,
-                installReferrer = data.referrer,
-                facebookDecryption = checkRemoteFirebaseString(
-                    remote = fbDec,
-                    defaultString = DECRYPTION_KEY
-                ),
-                randomParamsInLinkEnabled = false,
-                applicationId = data.bundle,
-                appsId = data.appsFlyerID,
-                googleAdId = data.gaid,
-                appDeveloperKey = APPS_FLYER_DEV_KEY,
-                userBattery = data.battery.toString(),
-                remoteConfig = ConfigData(
-                    tracker = firebaseRemoteConfig.tracker, // check .isNotEmpty or .isNotBlank?
-                    isAppsFlyerEnabled = firebaseRemoteConfig.isAppsFlyerEnabled,
-                    fbAppId = checkRemoteFirebaseString(
-                        remote = firebaseRemoteConfig.fbAppId,
-                        defaultString = APP_ID
+            val extractedTracker = firebaseRemoteConfig.tracker
+            if(extractedTracker.isNotBlank() && extractedTracker != null.toString()){
+                val trackingData = TrackingData(
+                    facebookDeeplink = data.deeplink,
+                    installReferrer = data.referrer,
+                    facebookDecryption = checkRemoteFirebaseString(
+                        remote = fbDec,
+                        defaultString = DECRYPTION_KEY
                     ),
-                    fbToken = checkRemoteFirebaseString(
-                        remote = firebaseRemoteConfig.fbToken,
-                        defaultString = TOKEN
-                    )
-                ),
-                attributionData = data.appsFlyerMap,
-                isUserDeveloper = data.adb
-            )
+                    randomParamsInLinkEnabled = false,
+                    applicationId = data.bundle,
+                    appsId = data.appsFlyerID,
+                    googleAdId = data.gaid,
+                    appDeveloperKey = APPS_FLYER_DEV_KEY,
+                    userBattery = data.battery.toString(),
+                    remoteConfig = ConfigData(
+                        tracker = extractedTracker, // todo check .isNotEmpty or .isNotBlank?
+                        isAppsFlyerEnabled = firebaseRemoteConfig.isAppsFlyerEnabled,
+                        fbAppId = checkRemoteFirebaseString(
+                            remote = firebaseRemoteConfig.fbAppId,
+                            defaultString = APP_ID
+                        ),
+                        fbToken = checkRemoteFirebaseString(
+                            remote = firebaseRemoteConfig.fbToken,
+                            defaultString = TOKEN
+                        )
+                    ),
+                    attributionData = data.appsFlyerMap,
+                    isUserDeveloper = data.adb
+                )
 
-            introViewModel.getRemoteData(trackingData)
+                introViewModel.getRemoteData(trackingData)
 
-            lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    introViewModel.finalLinkState.collectLatest { remoteData ->
+                lifecycleScope.launch {
+                    repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        introViewModel.finalLinkState.collectLatest { remoteData ->
 
-                        val url = remoteData.url
-                        val push = remoteData.push
+                            val url = remoteData.url
+                            val push = remoteData.push
 
-                        if (url != null) {
-                            if (url.isNotBlank()) {
-                                oneSignalClient.pushConnectionData(
-                                    id = data.appsFlyerID.toString(),
-                                    sentence = push ?: "organic"
-                                )
-                                pathToWeb(url, isCache = false)
+                            if (url != null) {
+                                if (url.isNotBlank()) {
+                                    oneSignalClient.pushConnectionData(
+                                        id = data.appsFlyerID.toString(),
+                                        sentence = push ?: "organic"
+                                    )
+                                    pathToWeb(url, isCache = false)
+                                }
+                            } else {
+                                pathToLocalApp()
                             }
-                        } else {
-                            pathToLocalApp()
                         }
                     }
                 }
+            } else {
+                pathToLocalApp()
             }
         }
     }

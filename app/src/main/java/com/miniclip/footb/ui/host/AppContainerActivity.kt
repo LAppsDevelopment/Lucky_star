@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import com.miniclip.footb.databinding.ActivityAppContainerBinding
 import com.miniclip.footb.model.open_ai_api.HolderManager
-import com.miniclip.footb.services.params.config.MyConfigImpl
+import com.miniclip.footb.services.params.config.FirebaseConfigImpl
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ class AppContainerActivity : AppCompatActivity() {
     lateinit var remoteHolder: HolderManager
 
     @Inject
-    lateinit var firebaseClient: MyConfigImpl
+    lateinit var firebaseClient: FirebaseConfigImpl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)

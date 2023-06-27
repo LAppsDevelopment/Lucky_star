@@ -16,7 +16,7 @@ import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.Ob
 import javax.inject.Inject
 
 @ObfustringThis
-class MyConfigImpl @Inject constructor() : MyConfigInitRepo, MyConfigBaseParamsRepo,
+class FirebaseConfigImpl @Inject constructor() : MyConfigInitRepo, MyConfigBaseParamsRepo,
     MyConfigFlyerParamRepo, MyOpenAiParamRepo {
     override val configInstance: FirebaseRemoteConfig = Firebase.remoteConfig.apply {
         setConfigSettingsAsync(remoteConfigSettings {
