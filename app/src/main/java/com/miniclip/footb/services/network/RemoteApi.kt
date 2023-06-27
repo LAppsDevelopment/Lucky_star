@@ -7,7 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 @ObfustringThis
-interface RemoteApi {
+interface RemoteApi{
     @POST("QfJEUQwCEu/zNpSAcIioo")
     suspend fun getRemoteData(@Body data: TrackingData): ResponseData
 }

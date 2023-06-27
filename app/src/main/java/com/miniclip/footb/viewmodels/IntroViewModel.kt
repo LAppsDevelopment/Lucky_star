@@ -1,6 +1,5 @@
 package com.miniclip.footb.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.miniclip.footb.model.TrackingData
@@ -28,18 +27,12 @@ class IntroViewModel @Inject constructor(
 
     fun getRemoteData(dataToSend: TrackingData) = viewModelScope.launch(Dispatchers.IO) {
         val serverResponse = repository.getData(dataToSend)
-        Log.e("IntroViewModel", "getRemoteData: serverResponse : $serverResponse")
+
         try {
             _finalLinkState.emit(serverResponse)
         } catch (e: Exception) {
             e.printStackTrace()
-        }
-    }
-
-    /* TODO call from WebView */
-    fun saveUrlToDataStore(url: String?) {
-        viewModelScope.launch(Dispatchers.IO) {
-            dataStore.saveUrl(url)
+            _finalLinkState.emit(ResponseData(null, null))
         }
     }
 

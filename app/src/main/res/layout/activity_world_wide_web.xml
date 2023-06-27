@@ -5,15 +5,15 @@
     android:layout_height="match_parent">
 
     <WebView
-        android:id="@+id/m_web_view"
+        android:id="@+id/mWebView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusableInTouchMode="true"
-        android:layerType="hardware"
         android:focusable="true"
-        android:scrollIndicators="none"
-        android:saveEnabled="true"
+        android:focusableInTouchMode="true"
         android:importantForAutofill="noExcludeDescendants"
+        android:layerType="hardware"
+        android:saveEnabled="true"
+        android:scrollIndicators="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

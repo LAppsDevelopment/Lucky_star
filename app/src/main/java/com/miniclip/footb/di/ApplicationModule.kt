@@ -2,7 +2,7 @@ package com.miniclip.footb.di
 
 import android.content.Context
 import com.miniclip.footb.services.local_cache.MyDataStoreImpl
-import com.miniclip.footb.services.params.config.MyConfigImpl
+import com.miniclip.footb.services.params.config.FirebaseConfigImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,5 +22,5 @@ object ApplicationModule {
 
     @Singleton
     @Provides
-    fun provideMyConfigImpl() = MyConfigImpl()
+    fun provideMyConfigImpl() = FirebaseConfigImpl()
 }

@@ -9,6 +9,7 @@ plugins {
     id("com.google.firebase.crashlytics")
     id("com.onesignal.androidsdk.onesignal-gradle-plugin")
     id("io.github.c0nnor263.obfustring-plugin")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 val localProperties = Properties()
@@ -37,7 +38,7 @@ android {
         buildConfigField("String", "HOST", "\"${localProperties.getProperty("SERVER_HOST")}\"")
     }
 
-    packagingOptions {
+    packaging {
         resources.excludes.add("META-INF/*")
     }
 
@@ -75,6 +76,8 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -103,7 +106,6 @@ dependencies {
     // Install Referrer
     implementation("com.android.installreferrer:installreferrer:2.2")
 
-
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.1.1"))
     implementation("com.google.firebase:firebase-analytics-ktx")
@@ -115,12 +117,10 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.46.1")
 
     // Room
-    val roomVersion = "2.5.1"
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
-    implementation("androidx.room:room-runtime:$roomVersion")
-
+    annotationProcessor("androidx.room:room-compiler:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2")
+    implementation("androidx.room:room-ktx:2.5.2")
+    implementation("androidx.room:room-runtime:2.5.2")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -128,5 +128,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
     implementation("com.google.code.gson:gson:2.10.1")
 
+    implementation("com.github.bumptech.glide:glide:4.15.1")
     implementation("io.github.c0nnor263:obfustring-core:11.09")
+    implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
 }

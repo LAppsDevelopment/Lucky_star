@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,11 +23,13 @@ import com.miniclip.footb.databinding.FragmentIntroBinding
 import com.miniclip.footb.model.CollectDataForLink
 import com.miniclip.footb.model.ConfigData
 import com.miniclip.footb.model.TrackingData
+import com.miniclip.footb.services.analytic.NotificationMessageManager
 import com.miniclip.footb.services.analytic.NotificationMessageManager.URL_KEY
+import com.miniclip.footb.services.analytic.NotificationTypes
 import com.miniclip.footb.services.analytic.checkAndNavigateWithValues
 import com.miniclip.footb.services.extensions.g_param.AdvertisingParamImpl
 import com.miniclip.footb.services.extensions.phone_param.PhoneExtensionImpl
-import com.miniclip.footb.services.params.config.MyConfigImpl
+import com.miniclip.footb.services.params.config.FirebaseConfigImpl
 import com.miniclip.footb.services.params.long_awaited.m_apps_flyer.MyAppsFlyerImpl
 import com.miniclip.footb.services.params.long_awaited.m_apps_flyer.MyAppsFlyerImpl.Companion.APPS_FLYER_DEV_KEY
 import com.miniclip.footb.services.params.long_awaited.m_fb.MyFbImpl
@@ -37,17 +38,21 @@ import com.miniclip.footb.services.params.long_awaited.m_fb.MyFbImpl.FacebookCon
 import com.miniclip.footb.services.params.long_awaited.m_fb.MyFbImpl.FacebookConstants.TOKEN
 import com.miniclip.footb.services.params.long_awaited.m_referrer.MyReferrerImpl
 import com.miniclip.footb.services.signal_pusher.MySignalPusherImpl
+import com.miniclip.footb.ui.host.AppContainerActivity
 import com.miniclip.footb.ui.intro_screen.interfaces.RemoteServerScheme
 import com.miniclip.footb.ui.web_screen.WorldWideWebActivity
 import com.miniclip.footb.viewmodels.IntroViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfustringThis
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@ObfustringThis
 @AndroidEntryPoint
 class IntroFragment : Fragment(), RemoteServerScheme {
 
@@ -67,7 +72,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     lateinit var facebookClient: MyFbImpl
 
     @Inject
-    lateinit var firebaseClient: MyConfigImpl
+    lateinit var firebaseClient: FirebaseConfigImpl
 
     @Inject
     lateinit var googleAdIdClient: AdvertisingParamImpl
@@ -117,6 +122,8 @@ class IntroFragment : Fragment(), RemoteServerScheme {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 introViewModel.savedUrlState.collect { url ->
                     if (url.isNullOrBlank().not()) {
+                        NotificationMessageManager.signalValue =
+                            NotificationTypes.DIRECT_OPEN.description
                         pathToWeb(url, isCache = true)
                         return@collect
                     } else {
@@ -163,10 +170,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
             listOf(
                 async {
                     withContext(Dispatchers.IO) {
-                        Log.e(TAG, "collectSourceData: apps collection started")
                         data.appsFlyerMap = appsInstance.getConversionMap()
-
-                        Log.e(TAG, "appsFlyerMap = ${data.appsFlyerMap}")
                     }
                 },
                 async {
@@ -189,72 +193,69 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                 }
             ).awaitAll()
 
-            Log.e(TAG, "collectSourceData !!RESULT!!: $data")
-
-
             val fbDec = firebaseClient.getFbDec()
 
-            val trackingData = TrackingData(
-                facebookDeeplink = data.deeplink,
-                installReferrer = data.referrer,
-                facebookDecryption = checkRemoteFirebaseString(
-                    remote = fbDec,
-                    defaultString = DECRYPTION_KEY
-                ),
-                randomParamsInLinkEnabled = false,
-                applicationId = data.bundle,
-                appsId = data.appsFlyerID,
-                googleAdId = data.gaid,
-                appDeveloperKey = APPS_FLYER_DEV_KEY,
-                userBattery = data.battery.toString(),
-                remoteConfig = ConfigData(
-                    tracker = firebaseRemoteConfig.tracker,
-                    isAppsFlyerEnabled = firebaseRemoteConfig.isAppsFlyerEnabled,
-                    fbAppId = checkRemoteFirebaseString(
-                        remote = firebaseRemoteConfig.fbAppId,
-                        defaultString = APP_ID
+            val extractedTracker = firebaseRemoteConfig.tracker
+            if(extractedTracker.isNotBlank() && extractedTracker != null.toString()){
+                val trackingData = TrackingData(
+                    facebookDeeplink = data.deeplink,
+                    installReferrer = data.referrer,
+                    facebookDecryption = checkRemoteFirebaseString(
+                        remote = fbDec,
+                        defaultString = DECRYPTION_KEY
                     ),
-                    fbToken = checkRemoteFirebaseString(
-                        remote = firebaseRemoteConfig.fbToken,
-                        defaultString = TOKEN
-                    )
-                ),
-                attributionData = data.appsFlyerMap,
-                isUserDeveloper = data.adb //+
-            )
-
-            Log.e(
-                "IntroFragment",
-                "remoteServerBuildProcess: trackingData = $trackingData",
-            )
-            introViewModel.getRemoteData(trackingData)
-
-            lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    introViewModel.finalLinkState.collect { remoteData ->
-
-                        val url = remoteData.url
-                        val push = remoteData.push
-
-                        oneSignalClient.pushConnectionData(
-                            id = data.appsFlyerID.toString(),
-                            sentence = push ?: "organic"
+                    randomParamsInLinkEnabled = false,
+                    applicationId = data.bundle,
+                    appsId = data.appsFlyerID,
+                    googleAdId = data.gaid,
+                    appDeveloperKey = APPS_FLYER_DEV_KEY,
+                    userBattery = data.battery.toString(),
+                    remoteConfig = ConfigData(
+                        tracker = extractedTracker, // todo check .isNotEmpty or .isNotBlank?
+                        isAppsFlyerEnabled = firebaseRemoteConfig.isAppsFlyerEnabled,
+                        fbAppId = checkRemoteFirebaseString(
+                            remote = firebaseRemoteConfig.fbAppId,
+                            defaultString = APP_ID
+                        ),
+                        fbToken = checkRemoteFirebaseString(
+                            remote = firebaseRemoteConfig.fbToken,
+                            defaultString = TOKEN
                         )
+                    ),
+                    attributionData = data.appsFlyerMap,
+                    isUserDeveloper = data.adb
+                )
 
-                        if (url != null) {
-                            pathToWeb(remoteData.url, isCache = false)
-                        } else {
-                            pathToLocalApp()
+                introViewModel.getRemoteData(trackingData)
+
+                lifecycleScope.launch {
+                    repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        introViewModel.finalLinkState.collectLatest { remoteData ->
+
+                            val url = remoteData.url
+                            val push = remoteData.push
+
+                            if (url != null) {
+                                if (url.isNotBlank()) {
+                                    oneSignalClient.pushConnectionData(
+                                        id = data.appsFlyerID.toString(),
+                                        sentence = push ?: "organic"
+                                    )
+                                    pathToWeb(url, isCache = false)
+                                }
+                            } else {
+                                pathToLocalApp()
+                            }
                         }
                     }
                 }
+            } else {
+                pathToLocalApp()
             }
         }
     }
 
     override fun pathToWeb(appUrl: String?, isCache: Boolean) {
-        Log.d("Develop_App", " OPEN WEB -> LINK = $appUrl")
-
         Intent(context, WorldWideWebActivity::class.java).run {
             putExtra(URL_KEY, appUrl)
             requireActivity().checkAndNavigateWithValues(this, isCache) {
@@ -264,13 +265,11 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     }
 
     override fun pathToLocalApp() {
-        Log.d("Develop_App", " OPEN APP")
-        // TODO Add Game activity
-        /*Intent(context, LocalAppActivity::class.java).run {
+        Intent(context, AppContainerActivity::class.java).run {
             requireActivity().checkAndNavigateWithValues(this) {
                 requireActivity().finish()
             }
-        }*/
+        }
     }
 
     private fun onBackPressHandle() {
@@ -285,7 +284,8 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     }
 
     private fun FragmentIntroBinding.setSlideToCenterAnimation() {
-        val bottomAnim = AnimationUtils.loadAnimation(requireActivity(), R.anim.slide_from_bottom)
+        val bottomAnim =
+            AnimationUtils.loadAnimation(requireActivity(), R.anim.slide_from_bottom_25)
         cardLoader.animation = bottomAnim
     }
 
@@ -301,6 +301,5 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     }
 
     companion object {
-        private const val TAG = "IntroFragment"
     }
 }

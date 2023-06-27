@@ -2,6 +2,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        maven(url = "https://jitpack.io")
     }
     dependencies {
         classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.6")
@@ -16,4 +17,5 @@ plugins {
     id("com.android.application") version "8.0.2" apply false
     id("com.android.library") version "8.0.2" apply false
     id("org.jetbrains.kotlin.android") version "1.8.21" apply false
+    id("androidx.navigation.safeargs.kotlin") version "2.5.3" apply false
 }

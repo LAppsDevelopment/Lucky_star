@@ -14,9 +14,6 @@ class MySignalPusherImpl @Inject constructor(
     private val defaultTag = "sub_app"
     private val onSentenceNull = "organic"
 
-    init {
-        performServiceInit()
-    }
 
     /* Push data where id - apps UID, sentence - element from list */
     override fun pushConnectionData(id: String, sentence: String?) {
@@ -28,7 +25,7 @@ class MySignalPusherImpl @Inject constructor(
     }
 
     /* Service init */
-    private fun performServiceInit() {
+    fun performServiceInit() {
         OneSignal.initWithContext(appContext)
         OneSignal.setAppId(ONE_SIGNAL_APP_ID)
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
