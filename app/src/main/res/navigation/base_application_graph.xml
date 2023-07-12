@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.miniclip.footb.ui.menu.MenuFragment"
+        android:name="com.upjers.zoo2animalpa.ui.menu.MenuFragment"
         android:label="MenuFragment"
         tools:layout="@layout/fragment_menu">
         <action
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.miniclip.footb.ui.chat_bot.ChatBotFragment"
+        android:name="com.upjers.zoo2animalpa.ui.chat_bot.ChatBotFragment"
         android:label="ChatFragment"
         tools:layout="@layout/fragment_chat_bot">
 
@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/dishRecipeFragment"
-        android:name="com.miniclip.footb.ui.dish_recipe.DishRecipeFragment"
+        android:name="com.upjers.zoo2animalpa.ui.dish_recipe.DishRecipeFragment"
         android:label="DishRecipeFragment">
 
         <argument
@@ -60,7 +60,7 @@
 
     <fragment
         android:id="@+id/dishArticleFragment"
-        android:name="com.miniclip.footb.ui.dish_article.DishArticleFragment"
+        android:name="com.upjers.zoo2animalpa.ui.dish_article.DishArticleFragment"
         android:label="DishArticleFragment">
         <argument
             android:name="articleName"

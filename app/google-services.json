@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:583559385986:android:b4b95086b3d59aa507b59b",
+        "mobilesdk_app_id": "1:583559385986:android:63f4cc46a78e855a07b59b",
         "android_client_info": {
-          "package_name": "com.miniclip.footb"
+          "package_name": "com.upjers.zoo2animalpa"
         }
       },
       "oauth_client": [

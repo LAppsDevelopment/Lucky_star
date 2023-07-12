@@ -23,11 +23,11 @@ obfustring {
 }
 
 android {
-    namespace = "com.miniclip.footb"
+    namespace = "com.upjers.zoo2animalpa"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.miniclip.footb"
+        applicationId = "com.upjers.zoo2animalpa"
         minSdk = 24
         targetSdk = 33
         versionCode = 1

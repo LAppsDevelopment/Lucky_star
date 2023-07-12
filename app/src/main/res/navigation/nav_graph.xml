@@ -5,7 +5,7 @@
     app:startDestination="@id/introFragment">
     <fragment
         android:id="@+id/introFragment"
-        android:name="com.miniclip.footb.ui.intro_screen.IntroFragment"
+        android:name="com.upjers.zoo2animalpa.ui.intro_screen.IntroFragment"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro" />
 </navigation>
