@@ -8,7 +8,9 @@ import com.miniclip.footb.services.network.data.ResponseData
 import com.miniclip.footb.ui.intro_screen.repository.IntroRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,8 +21,8 @@ class IntroViewModel @Inject constructor(
     private val dataStore: MyDataStoreImpl
 ) : ViewModel() {
 
-    private val _finalLinkState = MutableStateFlow(ResponseData())
-    val finalLinkState = _finalLinkState.asStateFlow()
+    private val _finalLinkState = MutableSharedFlow<ResponseData>(1)
+    val finalLinkState = _finalLinkState.asSharedFlow()
 
     private val _savedUrlState = MutableStateFlow<String?>(null)
     val savedUrlState = _savedUrlState.asStateFlow()

@@ -34,6 +34,7 @@
 
         <activity
             android:name=".ui.host.IntroActivity"
+            android:screenOrientation="locked"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
