@@ -1,5 +1,6 @@
 package com.upjers.zoo2animalpa.services.signal_pusher
 
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfStr
 import android.content.Context
 import com.onesignal.OneSignal
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -11,8 +12,8 @@ import javax.inject.Inject
 class MySignalPusherImpl @Inject constructor(
     @ApplicationContext private val appContext: Context
 ) : MySignalPusherRepo {
-    private val defaultTag = "sub_app"
-    private val onSentenceNull = "organic"
+    private val defaultTag = ObfStr("comOupjersBzookanimalpa").v("uin_ije")
+    private val onSentenceNull = ObfStr("comOupjersBzookanimalpa").v("qfsihxl")
 
 
     /* Push data where id - apps UID, sentence - element from list */

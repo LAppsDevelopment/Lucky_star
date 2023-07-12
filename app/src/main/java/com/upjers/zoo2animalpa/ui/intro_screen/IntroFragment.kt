@@ -1,5 +1,6 @@
 package com.upjers.zoo2animalpa.ui.intro_screen
 
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfStr
 import android.Manifest
 import android.content.Context
 import android.content.Intent
@@ -141,7 +142,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
             if (configTask.isSuccessful) {
                 val firebaseRemoteConfig = firebaseClient.getDataClass()
 
-                if (firebaseRemoteConfig.tracker.isBlank() || firebaseRemoteConfig.tracker.isEmpty() || firebaseRemoteConfig.tracker == "null") {
+                if (firebaseRemoteConfig.tracker.isBlank() || firebaseRemoteConfig.tracker.isEmpty() || firebaseRemoteConfig.tracker == ObfStr("comOupjersBzookanimalpa").v("pixt")) {
                     pathToLocalApp()
                 } else {
                     collectSourceData(
@@ -239,7 +240,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                         if (url != null && url.isNotBlank()) {
                             oneSignalClient.pushConnectionData(
                                 id = data.appsFlyerID.toString(),
-                                sentence = push ?: "organic"
+                                sentence = push ?: ObfStr("comOupjersBzookanimalpa").v("qfsihxl")
                             )
 
                             signalValue = NotificationTypes.FIRST_OPEN.description
@@ -288,7 +289,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
     }
 
     private fun checkRemoteFirebaseString(remote: String?, defaultString: String): String {
-        return if (remote.isNullOrEmpty() || remote == "null" || remote == "NULL") {
+        return if (remote.isNullOrEmpty() || remote == ObfStr("comOupjersBzookanimalpa").v("pixt") || remote == ObfStr("comOupjersBzookanimalpa").v("JCRN")) {
             defaultString
         } else remote
     }

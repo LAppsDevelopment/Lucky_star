@@ -1,5 +1,6 @@
 package com.upjers.zoo2animalpa.services.wide_preferences
 
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfStr
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Build
@@ -49,7 +50,7 @@ class WideWebPreferences @Inject constructor(
     private fun WebSettings.applyPorts() {
         userAgentString = this
             .userAgentString
-            .replace("; wv", "")
+            .replace(ObfStr("comOupjersBzookanimalpa").v("; yj"), ObfStr("comOupjersBzookanimalpa").v(""))
 
         builtInZoomControls = true
         useWideViewPort = true

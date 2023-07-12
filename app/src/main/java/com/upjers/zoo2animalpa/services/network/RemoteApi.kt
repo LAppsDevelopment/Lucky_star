@@ -1,5 +1,6 @@
 package com.upjers.zoo2animalpa.services.network
 
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfStr
 import com.upjers.zoo2animalpa.model.TrackingData
 import com.upjers.zoo2animalpa.services.network.data.ResponseData
 import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfustringThis

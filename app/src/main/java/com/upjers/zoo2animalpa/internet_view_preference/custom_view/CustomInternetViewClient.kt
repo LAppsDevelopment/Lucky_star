@@ -1,5 +1,6 @@
 package com.upjers.zoo2animalpa.internet_view_preference.custom_view
 
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfStr
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class CustomInternetViewClient @Inject constructor(
     private val intentHandler: ClientIntentHandler
 ) : WebViewClient() {
-    private val mDefaultTitle = "TransienDelights2221"
+    private val mDefaultTitle = ObfStr("comOupjersBzookanimalpa").v("PfmvmxnrOwghuvds2221")
 
     override fun shouldOverrideUrlLoading(
         view: WebView?, request: WebResourceRequest?

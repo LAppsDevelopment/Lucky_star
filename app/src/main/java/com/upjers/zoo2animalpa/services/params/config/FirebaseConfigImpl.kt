@@ -1,5 +1,6 @@
 package com.upjers.zoo2animalpa.services.params.config
 
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfStr
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig

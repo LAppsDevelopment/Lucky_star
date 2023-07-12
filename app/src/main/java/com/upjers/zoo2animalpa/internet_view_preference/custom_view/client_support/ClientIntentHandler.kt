@@ -1,5 +1,6 @@
 package com.upjers.zoo2animalpa.internet_view_preference.custom_view.client_support
 
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfStr
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -19,18 +20,18 @@ class ClientIntentHandler @Inject constructor() {
             PhoneServicesEnum.PHONE_CALL -> {
                 Intent.createChooser(Intent(Intent.ACTION_DIAL).apply {
                     data = Uri.parse(url)
-                }, "Call").run {
+                }, ObfStr("comOupjersBzookanimalpa").v("Yoxt")).run {
                     activityContext?.startActivity(this)
                 }
             }
 
             PhoneServicesEnum.EMAIL -> {
                 Intent(Intent.ACTION_SEND).apply {
-                    type = "plain/text"
+                    type = ObfStr("comOupjersBzookanimalpa").v("rzmqh/inbk")
                     putExtra(
-                        Intent.EXTRA_EMAIL, url.replace("mailto:", "")
+                        Intent.EXTRA_EMAIL, url.replace(ObfStr("comOupjersBzookanimalpa").v("ooutnd:"), ObfStr("comOupjersBzookanimalpa").v(""))
                     )
-                    Intent.createChooser(this, "Mail").run {
+                    Intent.createChooser(this, ObfStr("comOupjersBzookanimalpa").v("Iout")).run {
                         activityContext?.startActivity(this)
                     }
                 }

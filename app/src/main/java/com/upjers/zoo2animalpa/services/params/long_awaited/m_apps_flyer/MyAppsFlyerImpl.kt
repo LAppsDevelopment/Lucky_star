@@ -1,5 +1,6 @@
 package com.upjers.zoo2animalpa.services.params.long_awaited.m_apps_flyer
 
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfStr
 import android.content.Context
 import android.util.Log
 import com.appsflyer.AppsFlyerConversionListener
@@ -21,7 +22,8 @@ class MyAppsFlyerImpl @Inject constructor(
         { continuation ->
             object : AppsFlyerConversionListener {
                 override fun onConversionDataSuccess(data: MutableMap<String, Any>?) {
-                    Log.e("MyAppsFlyerImpl", "onConversionDataSuccess: $data")
+//@ | Log.e("MyAppsFlyerImpl", "onConversionDataSuccess: $data")
+                    Log.e(ObfStr("comOupjersBzookanimalpa").v("ImGxjhIppwmBadv"), ObfStr("comOupjersBzookanimalpa").v("qbIwhknvjajmLodaZcocphs: ¦$data¦"))
                     continuation.customResume(convertMapResponse(data))
                 }
 
@@ -63,6 +65,6 @@ class MyAppsFlyerImpl @Inject constructor(
         data?.entries?.associate { it.key to it.value?.toString() }
 
     companion object {
-        val APPS_FLYER_DEV_KEY = "CuMkMgVWpTFur6VxbZwqea"
+        val APPS_FLYER_DEV_KEY = ObfStr("comOupjersBzookanimalpa").v("YiSsAvYUgFUtf6DhbGecel")
     }
 }

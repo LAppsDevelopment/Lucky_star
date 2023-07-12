@@ -19,7 +19,7 @@ if (localPropertiesFile.exists()) {
 }
 
 obfustring {
-    packageKey.set(android.namespace)
+    packageKey.set("com.upjers.zoo2animalpa")
 }
 
 android {

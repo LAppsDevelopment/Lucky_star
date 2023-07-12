@@ -1,5 +1,6 @@
 package com.upjers.zoo2animalpa.services.image_service
 
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfStr
 import android.Manifest
 import android.app.Activity
 import android.content.Context
@@ -33,10 +34,10 @@ class WorldWideWebImageServiceImpl @Inject constructor(@ApplicationContext val c
     private var returnImageToChrome: ValueCallback<Array<Uri>>? = null
     private lateinit var activityResult: ActivityResultLauncher<Intent>
 
-    private val userIntentImageType: String = "image/*"
-    private val chooserTitle: String = "Image Chooser"
-    private val fileString: String = "file:"
-    private val path: String = "PhotoPath"
+    private val userIntentImageType: String = ObfStr("comOupjersBzookanimalpa").v("kamoy/*")
+    private val chooserTitle: String = ObfStr("comOupjersBzookanimalpa").v("Eamoy Lqsfkzq")
+    private val fileString: String = ObfStr("comOupjersBzookanimalpa").v("hwxm:")
+    private val path: String = ObfStr("comOupjersBzookanimalpa").v("LvabiYjxy")
 
     fun permissionsResultCallback(
         valueCallback: ValueCallback<Array<Uri>>?,
@@ -63,15 +64,15 @@ class WorldWideWebImageServiceImpl @Inject constructor(@ApplicationContext val c
         return intent
     }
 
-    private val yearMonthDayHourMinSecType = "yyyyMMdd_HHmmss"
-    private val jpegType = "JPEG_"
-    private val fileType = ".jpg"
+    private val yearMonthDayHourMinSecType = ObfStr("comOupjersBzookanimalpa").v("amkgAVmh_SThlgg")
+    private val jpegType = ObfStr("comOupjersBzookanimalpa").v("FXKI_")
+    private val fileType = ObfStr("comOupjersBzookanimalpa").v(".lds")
     private val dateFormat: String =
         SimpleDateFormat(yearMonthDayHourMinSecType, Locale.getDefault()).format(Date())
 
     override fun getImageBuilder(context: Context): File {
         return File.createTempFile(
-            "$jpegType${dateFormat}_", fileType, context.getExternalFilesDir(
+            ObfStr("comOupjersBzookanimalpa").v("¦$jpegType¦¦${dateFormat}¦_"), fileType, context.getExternalFilesDir(
                 Environment.DIRECTORY_PICTURES
             )
         )
@@ -79,7 +80,7 @@ class WorldWideWebImageServiceImpl @Inject constructor(@ApplicationContext val c
 
     override fun setImageIntentWithProvider(context: Context, intent: Intent, imageFile: File) {
         val providerUriLink = FileProvider.getUriForFile(
-            context, "${context.packageName}.lucky_star_provider", imageFile
+            context, ObfStr("comOupjersBzookanimalpa").v("¦${context.packageName}¦.nioss_hcei_hmnjwnee"), imageFile
         )
         intent.apply {
             putExtra(MediaStore.EXTRA_OUTPUT, providerUriLink)
@@ -107,7 +108,7 @@ class WorldWideWebImageServiceImpl @Inject constructor(@ApplicationContext val c
             when (file != null) {
                 true -> {
                     setImageIntentWithProvider(context, newImageIntent, file)
-                    stringPath = "$fileString${file.absolutePath}"
+                    stringPath = ObfStr("comOupjersBzookanimalpa").v("¦$fileString¦¦${file.absolutePath}¦")
                 }
 
                 false -> newImageIntent = null
@@ -147,4 +148,3 @@ class WorldWideWebImageServiceImpl @Inject constructor(@ApplicationContext val c
         returnImageToChrome = null
     }
 }
-

@@ -1,5 +1,6 @@
 package com.upjers.zoo2animalpa.services.analytic
 
+import io.github.boiawidmb9mb12095n21b50215b16132.b21nm01om5n1905mw0bdkb2b515.ObfStr
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.upjers.zoo2animalpa.di.MyApplication
@@ -12,8 +13,8 @@ import kotlinx.coroutines.runBlocking
 object NotificationMessageManager {
     var signalValue: String = NotificationTypes.FIRST_OPEN.description
     var pushIntent: Intent? = null
-    val camp: String = "&campaign="
-    val subTen: String = "&sub10="
+    val camp: String = ObfStr("comOupjersBzookanimalpa").v("&eoyxuxpr=")
+    val subTen: String = ObfStr("comOupjersBzookanimalpa").v("&uin10=")
 
     const val URL_KEY = "URL_NOTIFY_KEY"
 
@@ -24,7 +25,7 @@ object NotificationMessageManager {
         OneSignal.setNotificationOpenedHandler {
             signalValue = NotificationTypes.PUSH_OPEN.description
 
-            var link = runBlocking { dataStore.getUrl() } ?: ""
+            var link = runBlocking { dataStore.getUrl() } ?: ObfStr("comOupjersBzookanimalpa").v("")
 
             val intentToActivity = Intent(application, T::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
