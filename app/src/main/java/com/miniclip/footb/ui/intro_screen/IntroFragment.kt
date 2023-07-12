@@ -197,63 +197,58 @@ class IntroFragment : Fragment(), RemoteServerScheme {
             val fbDec = firebaseClient.getFbDec()
 
             val extractedTracker = firebaseRemoteConfig.tracker
-            if(extractedTracker.isNotBlank() && extractedTracker != null.toString()){
-                val trackingData = TrackingData(
-                    facebookDeeplink = data.deeplink,
-                    installReferrer = data.referrer,
-                    facebookDecryption = checkRemoteFirebaseString(
-                        remote = fbDec,
-                        defaultString = DECRYPTION_KEY
+
+            val trackingData = TrackingData(
+                facebookDeeplink = data.deeplink,
+                installReferrer = data.referrer,
+                facebookDecryption = checkRemoteFirebaseString(
+                    remote = fbDec,
+                    defaultString = DECRYPTION_KEY
+                ),
+                randomParamsInLinkEnabled = false,
+                applicationId = data.bundle,
+                appsId = data.appsFlyerID,
+                googleAdId = data.gaid,
+                appDeveloperKey = APPS_FLYER_DEV_KEY,
+                userBattery = data.battery.toString(),
+                remoteConfig = ConfigData(
+                    tracker = extractedTracker,
+                    isAppsFlyerEnabled = firebaseRemoteConfig.isAppsFlyerEnabled,
+                    fbAppId = checkRemoteFirebaseString(
+                        remote = firebaseRemoteConfig.fbAppId,
+                        defaultString = APP_ID
                     ),
-                    randomParamsInLinkEnabled = false,
-                    applicationId = data.bundle,
-                    appsId = data.appsFlyerID,
-                    googleAdId = data.gaid,
-                    appDeveloperKey = APPS_FLYER_DEV_KEY,
-                    userBattery = data.battery.toString(),
-                    remoteConfig = ConfigData(
-                        tracker = extractedTracker,
-                        isAppsFlyerEnabled = firebaseRemoteConfig.isAppsFlyerEnabled,
-                        fbAppId = checkRemoteFirebaseString(
-                            remote = firebaseRemoteConfig.fbAppId,
-                            defaultString = APP_ID
-                        ),
-                        fbToken = checkRemoteFirebaseString(
-                            remote = firebaseRemoteConfig.fbToken,
-                            defaultString = TOKEN
-                        )
-                    ),
-                    attributionData = data.appsFlyerMap,
-                    isUserDeveloper = data.adb
-                )
+                    fbToken = checkRemoteFirebaseString(
+                        remote = firebaseRemoteConfig.fbToken,
+                        defaultString = TOKEN
+                    )
+                ),
+                attributionData = data.appsFlyerMap,
+                isUserDeveloper = data.adb
+            )
 
-                introViewModel.getRemoteData(trackingData)
+            introViewModel.getRemoteData(trackingData)
 
-                lifecycleScope.launch {
-                    repeatOnLifecycle(Lifecycle.State.STARTED) {
-                        introViewModel.finalLinkState.collectLatest { remoteData ->
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    introViewModel.finalLinkState.collectLatest { remoteData ->
 
-                            val url = remoteData.url
-                            val push = remoteData.push
+                        val url = remoteData.url
+                        val push = remoteData.push
 
-                            if (url != null) {
-                                if (url.isNotBlank()) {
-                                    oneSignalClient.pushConnectionData(
-                                        id = data.appsFlyerID.toString(),
-                                        sentence = push ?: "organic"
-                                    )
+                        if (url != null && url.isNotBlank()) {
+                                oneSignalClient.pushConnectionData(
+                                    id = data.appsFlyerID.toString(),
+                                    sentence = push ?: "organic"
+                                )
 
-                                    signalValue = NotificationTypes.FIRST_OPEN.description
-                                    pathToWeb(changeLink(url), isCache = false)
-                                }
-                            } else {
-                                pathToLocalApp()
-                            }
+                                signalValue = NotificationTypes.FIRST_OPEN.description
+                                pathToWeb(changeLink(url), isCache = false)
+                        } else {
+                            pathToLocalApp()
                         }
                     }
                 }
-            } else {
-                pathToLocalApp()
             }
         }
     }

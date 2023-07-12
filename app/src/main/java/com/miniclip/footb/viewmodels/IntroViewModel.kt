@@ -28,9 +28,9 @@ class IntroViewModel @Inject constructor(
     val savedUrlState = _savedUrlState.asStateFlow()
 
     fun getRemoteData(dataToSend: TrackingData) = viewModelScope.launch(Dispatchers.IO) {
-        val serverResponse = repository.getData(dataToSend)
-
         try {
+            val serverResponse = repository.getData(dataToSend)
+
             _finalLinkState.emit(serverResponse)
         } catch (e: Exception) {
             e.printStackTrace()

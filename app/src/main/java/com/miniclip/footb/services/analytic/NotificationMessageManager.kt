@@ -36,8 +36,15 @@ object NotificationMessageManager {
         }
     }
 
+    private fun cropToCamp(link: String): String = link.substringBefore(camp)
+
     fun changeLink(link: String): String {
-        val mainWithSignal =  link.substringBefore(camp).replaceAfter(subTen, signalValue)
+        val mainWithSignal = cropToCamp(link = link).replaceAfter(subTen, signalValue)
+
+        return getChangedUrl(link = link, mainWithSignal = mainWithSignal)
+    }
+
+    private fun getChangedUrl(link: String, mainWithSignal: String): String {
         return link.replaceBefore(camp, mainWithSignal)
     }
 }

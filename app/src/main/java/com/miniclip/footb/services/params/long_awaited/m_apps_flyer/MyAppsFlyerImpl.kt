@@ -16,11 +16,7 @@ import kotlin.coroutines.suspendCoroutine
 class MyAppsFlyerImpl @Inject constructor(
     @ActivityContext private val activityContext: Context
 ) : MyAppsFlyerRepo {
-    private val appsFlyerLibInstance: AppsFlyerLib = AppsFlyerLib.getInstance().apply {
-        start(activityContext, APPS_FLYER_DEV_KEY)
-    }
-
-    override val myConversionListener:
+      override val myConversionListener:
                 (Continuation<Map<String, String?>?>) -> AppsFlyerConversionListener =
         { continuation ->
             object : AppsFlyerConversionListener {
@@ -45,15 +41,16 @@ class MyAppsFlyerImpl @Inject constructor(
 
     // Map extraction
     override suspend fun getConversionMap() = suspendCoroutine { continuation ->
-        appsFlyerLibInstance.registerConversionListener(
-            activityContext,
-            myConversionListener(continuation)
-        )
+        AppsFlyerLib.getInstance().init(
+            APPS_FLYER_DEV_KEY,
+            myConversionListener(continuation),
+            activityContext
+        ).start(activityContext)
     }
 
     //UID extraction
     override fun getServiceUID(): String? = try {
-        appsFlyerLibInstance.getAppsFlyerUID(activityContext)
+        AppsFlyerLib.getInstance().getAppsFlyerUID(activityContext)
     } catch (e: Exception) {
         null
     }
@@ -66,6 +63,6 @@ class MyAppsFlyerImpl @Inject constructor(
         data?.entries?.associate { it.key to it.value?.toString() }
 
     companion object {
-        const val APPS_FLYER_DEV_KEY = "CuMkMgVWpTFur6VxbZwqea"
+        val APPS_FLYER_DEV_KEY = "CuMkMgVWpTFur6VxbZwqea"
     }
 }
