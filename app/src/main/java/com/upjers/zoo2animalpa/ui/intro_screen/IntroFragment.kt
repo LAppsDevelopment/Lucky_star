@@ -141,7 +141,7 @@ class IntroFragment : Fragment(), RemoteServerScheme {
             if (configTask.isSuccessful) {
                 val firebaseRemoteConfig = firebaseClient.getDataClass()
 
-                if (firebaseRemoteConfig.tracker.isBlank() && firebaseRemoteConfig.tracker == "null") {
+                if (firebaseRemoteConfig.tracker.isBlank() || firebaseRemoteConfig.tracker.isEmpty() || firebaseRemoteConfig.tracker == "null") {
                     pathToLocalApp()
                 } else {
                     collectSourceData(
@@ -237,13 +237,13 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                         val push = remoteData.push
 
                         if (url != null && url.isNotBlank()) {
-                                oneSignalClient.pushConnectionData(
-                                    id = data.appsFlyerID.toString(),
-                                    sentence = push ?: "organic"
-                                )
+                            oneSignalClient.pushConnectionData(
+                                id = data.appsFlyerID.toString(),
+                                sentence = push ?: "organic"
+                            )
 
-                                signalValue = NotificationTypes.FIRST_OPEN.description
-                                pathToWeb(changeLink(url), isCache = false)
+                            signalValue = NotificationTypes.FIRST_OPEN.description
+                            pathToWeb(changeLink(url), isCache = false)
                         } else {
                             pathToLocalApp()
                         }
