@@ -1,7 +1,9 @@
 package com.upjers.zoo2animalpa.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class ConfigData(
     @SerializedName(DOMAIN)
     val tracker: String,

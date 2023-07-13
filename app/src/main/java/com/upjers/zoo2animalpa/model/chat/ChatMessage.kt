@@ -1,7 +1,9 @@
 package com.upjers.zoo2animalpa.model.chat
 
+import androidx.annotation.Keep
 import java.util.UUID
 
+@Keep
 data class ChatMessage(
     val id: String = UUID.randomUUID().toString(),
     val message: String,

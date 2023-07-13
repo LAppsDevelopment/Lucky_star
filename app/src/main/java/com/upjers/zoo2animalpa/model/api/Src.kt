@@ -1,5 +1,8 @@
 package com.upjers.zoo2animalpa.model.api
 
+import androidx.annotation.Keep
+
+@Keep
 data class Src(
     val landscape: String,
     val large: String,

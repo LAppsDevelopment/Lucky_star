@@ -1,5 +1,8 @@
 package com.upjers.zoo2animalpa.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class CollectDataForLink(
     var appsFlyerMap: Map<String, String?>? = null,
     var referrer: String? = null,
