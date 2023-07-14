@@ -1,5 +1,6 @@
 package com.upjers.zoo2animalpa.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import com.upjers.zoo2animalpa.model.CommonValues.ADB_NAME
 import com.upjers.zoo2animalpa.model.CommonValues.AF_USER_ID_NAME
@@ -12,6 +13,7 @@ import com.upjers.zoo2animalpa.model.CommonValues.GOOGLE_AD_ID_NAME
 import com.upjers.zoo2animalpa.model.CommonValues.IS_RANDOM_ENABLED_NAME
 import com.upjers.zoo2animalpa.model.CommonValues.REFERRER_NAME
 
+@Keep
 data class TrackingData(
 
     @SerializedName(BATTERY_NAME)

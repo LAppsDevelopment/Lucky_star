@@ -92,7 +92,7 @@ dependencies {
 
 
     // AppsFlyer
-    implementation("com.appsflyer:af-android-sdk:6.11.1")
+    implementation("com.appsflyer:af-android-sdk:6.12.1")
 
     // Facebook
     implementation("com.facebook.android:facebook-android-sdk:16.0.1")
