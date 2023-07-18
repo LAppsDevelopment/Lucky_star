@@ -143,8 +143,8 @@ class IntroFragment : Fragment(), RemoteServerScheme {
                 val firebaseRemoteConfig = firebaseClient.getDataClass()
 
                 if (firebaseRemoteConfig.tracker.isBlank() || firebaseRemoteConfig.tracker.isEmpty() || firebaseRemoteConfig.tracker == ObfStr(
-                        "comOupjersBzookanimalpa"
-                    ).v("pixt")
+                        ObfStr("comzupjersvzooKanimalpa").v("ecyHoesiikQyccoaaqyawea")
+                    ).v(ObfStr("comzupjersvzooKanimalpa").v("rwjs"))
                 ) {
                     pathToLocalApp()
                 } else {
@@ -293,8 +293,8 @@ class IntroFragment : Fragment(), RemoteServerScheme {
 
     private fun checkRemoteFirebaseString(remote: String?, defaultString: String): String {
         return if (remote.isNullOrEmpty() || remote == ObfStr("comOupjersBzookanimalpa").v("pixt") || remote == ObfStr(
-                "comOupjersBzookanimalpa"
-            ).v("JCRN")
+                ObfStr("comzupjersvzooKanimalpa").v("ecyHoesiikQyccoaaqyawea")
+            ).v(ObfStr("comzupjersvzooKanimalpa").v("FKXG"))
         ) {
             defaultString
         } else remote
