@@ -9,9 +9,7 @@ import com.upjers.zoo2animalpa.ui.intro_screen.repository.IntroRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,8 +22,8 @@ class IntroViewModel @Inject constructor(
     private val _finalLinkState = MutableSharedFlow<ResponseData>(1)
     val finalLinkState = _finalLinkState.asSharedFlow()
 
-    private val _savedUrlState = MutableStateFlow<String?>(null)
-    val savedUrlState = _savedUrlState.asStateFlow()
+    private val _savedUrlState = MutableSharedFlow<String>()
+    val savedUrlState = _savedUrlState.asSharedFlow()
 
     fun getRemoteData(dataToSend: TrackingData) = viewModelScope.launch(Dispatchers.IO) {
         try {
@@ -41,8 +39,7 @@ class IntroViewModel @Inject constructor(
     fun getUrlFromDataStore() {
         viewModelScope.launch(Dispatchers.IO) {
             val url = dataStore.getUrl()
-            _savedUrlState.emit(url)
+            _savedUrlState.emit(url.toString())
         }
     }
-
 }

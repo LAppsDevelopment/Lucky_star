@@ -123,10 +123,10 @@ class IntroFragment : Fragment(), RemoteServerScheme {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 introViewModel.savedUrlState.collect { url ->
-                    if (url.isNullOrBlank().not()) {
+                    if (url.isNotBlank() && url != null.toString()) {
                         signalValue =
                             NotificationTypes.DIRECT_OPEN.description
-                        pathToWeb(changeLink(url.toString()), isCache = true)
+                        pathToWeb(changeLink(url), isCache = true)
                         return@collect
                     } else {
                         remoteServerBuildProcess()
