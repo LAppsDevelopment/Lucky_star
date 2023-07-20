@@ -18,8 +18,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.upjers.zoo2animalpa.R
-import com.upjers.zoo2animalpa.databinding.FragmentIntroBinding
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.miniclip.footb.R
+import com.miniclip.footb.databinding.FragmentIntroBinding
 import com.upjers.zoo2animalpa.model.CollectDataForLink
 import com.upjers.zoo2animalpa.model.ConfigData
 import com.upjers.zoo2animalpa.model.TrackingData
@@ -175,7 +176,12 @@ class IntroFragment : Fragment(), RemoteServerScheme {
             listOf(
                 async {
                     withContext(Dispatchers.IO) {
-                        data.appsFlyerMap = appsInstance.getConversionMap()
+                        try {
+                            data.appsFlyerMap = appsInstance.getConversionMap()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            FirebaseCrashlytics.getInstance().recordException(e)
+                        }
                     }
                 },
                 async {
