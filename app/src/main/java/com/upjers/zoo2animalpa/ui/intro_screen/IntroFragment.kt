@@ -172,7 +172,14 @@ class IntroFragment : Fragment(), RemoteServerScheme {
         val appsInstance = MyAppsFlyerImpl(requireActivity())
 
         lifecycleScope.launch(Dispatchers.IO) {
-            data.appsFlyerID = appsInstance.getServiceUID()
+
+            try {
+                data.appsFlyerID = appsInstance.getServiceUID()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                FirebaseCrashlytics.getInstance().recordException(e)
+            }
+
             listOf(
                 async {
                     withContext(Dispatchers.IO) {
