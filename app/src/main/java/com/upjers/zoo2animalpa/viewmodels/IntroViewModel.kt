@@ -22,7 +22,7 @@ class IntroViewModel @Inject constructor(
     private val _finalLinkState = MutableSharedFlow<ResponseData>(1)
     val finalLinkState = _finalLinkState.asSharedFlow()
 
-    private val _savedUrlState = MutableSharedFlow<String>()
+    private val _savedUrlState = MutableSharedFlow<String>(1)
     val savedUrlState = _savedUrlState.asSharedFlow()
 
     fun getRemoteData(dataToSend: TrackingData) = viewModelScope.launch(Dispatchers.IO) {

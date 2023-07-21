@@ -17,7 +17,7 @@ import kotlin.coroutines.suspendCoroutine
 class MyAppsFlyerImpl @Inject constructor(
     @ActivityContext private val activityContext: Context
 ) : MyAppsFlyerRepo {
-      override val myConversionListener:
+    override val myConversionListener:
                 (Continuation<Map<String, String?>?>) -> AppsFlyerConversionListener =
         { continuation ->
             object : AppsFlyerConversionListener {

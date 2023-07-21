@@ -19,8 +19,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.miniclip.footb.R
-import com.miniclip.footb.databinding.FragmentIntroBinding
+import com.upjers.zoo2animalpa.R
+import com.upjers.zoo2animalpa.databinding.FragmentIntroBinding
 import com.upjers.zoo2animalpa.model.CollectDataForLink
 import com.upjers.zoo2animalpa.model.ConfigData
 import com.upjers.zoo2animalpa.model.TrackingData
